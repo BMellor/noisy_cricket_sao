@@ -22,7 +22,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM"
 			(at 0 0 0)
 			(effects
 				(font
@@ -147,7 +147,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:AD8107"
 			(at 0 0 0)
 			(effects
 				(font
@@ -354,7 +354,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:CH32V003F4U6"
 			(at 0 0 0)
 			(effects
 				(font
@@ -795,7 +795,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:Debug Pogo 6-Pin"
 			(at 0 0 0)
 			(effects
 				(font
@@ -985,7 +985,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:E6CC1205RGBC3UDA"
 			(at 0 0 0)
 			(effects
 				(font
@@ -1361,7 +1361,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "noisy_cricket_sao:LMD3526B261-OA5"
 			(at 0 0 0)
 			(effects
 				(font
