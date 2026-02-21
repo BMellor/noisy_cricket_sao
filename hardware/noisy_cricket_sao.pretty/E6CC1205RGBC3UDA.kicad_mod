@@ -5,7 +5,7 @@
 	(layer "F.Cu")
 	(descr "3.2x1.3x1.1mm 120° SMD Reverse Mount RGB LED")
 	(property "Reference" "REF**"
-		(at 0 -0.5 0)
+		(at -2.25 -0.25 90)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "a9400d53-66fe-4335-8194-a2f610795231")
@@ -17,7 +17,7 @@
 		)
 	)
 	(property "Value" "E6CC1205RGBC3UDA"
-		(at 0 1 0)
+		(at 0.5 5.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "57085ef9-1d9a-441a-956a-cafb23854d55")
@@ -55,8 +55,48 @@
 		)
 	)
 	(attr smd)
+	(fp_line
+		(start 1.25 2)
+		(end 1.25 2.25)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4353f077-588b-4aae-b9dc-f96522c5b7f4")
+	)
+	(fp_line
+		(start 1.25 2.25)
+		(end 1 2.25)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e0377f41-9816-45a4-a6fc-dfe83e34abc8")
+	)
+	(fp_line
+		(start 1.75 0.25)
+		(end 2.25 0.25)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5ef13977-f73a-4c3f-909a-56daae28af5a")
+	)
+	(fp_line
+		(start 2 0.25)
+		(end 2 -0.25)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "1e44e6ec-057e-4e8e-a9e7-3077a1e32137")
+	)
 	(fp_text user "${REFERENCE}"
-		(at 0 2.5 0)
+		(at 0.5 7 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "ac15b76b-79d3-42a4-84cb-bcf235f6073b")
@@ -67,5 +107,51 @@
 			)
 		)
 	)
+	(pad "" np_thru_hole oval
+		(at 0 0)
+		(size 3 2)
+		(drill oval 3 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "c5fec325-2dfb-4c1d-a232-7de1550e4b55")
+	)
+	(pad "1" smd roundrect
+		(at 0.55 1.5)
+		(size 0.7 0.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "bff4b3fa-561e-4ab6-99b4-94173decd047")
+	)
+	(pad "2" smd roundrect
+		(at 0.55 -1.5)
+		(size 0.7 0.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "c54ba414-b816-4680-9a5c-8c6f0e920e1d")
+	)
+	(pad "3" smd roundrect
+		(at -0.55 1.5)
+		(size 0.7 0.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "8f531e5b-ea5a-462d-af01-2dedebc81b4d")
+	)
+	(pad "4" smd roundrect
+		(at -0.55 -1.5)
+		(size 0.7 0.8)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "0604770c-baa8-4ab0-8ba6-59328af10925")
+	)
 	(embedded_fonts no)
+	(model "${KIPRJMOD}/noisy_cricket_sao.pretty/E6CC1205RGBC3UDA.step"
+		(offset
+			(xyz 0 0 0.5)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -180 -0 -0)
+		)
+	)
 )
