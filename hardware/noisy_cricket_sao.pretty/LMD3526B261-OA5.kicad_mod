@@ -55,17 +55,6 @@
 		)
 	)
 	(attr smd)
-	(fp_circle
-		(center -0.005 0.71)
-		(end 0.735 0.71)
-		(stroke
-			(width 0.3)
-			(type solid)
-		)
-		(fill no)
-		(layers "F.Cu" "F.Mask")
-		(uuid "868a7180-b385-4baa-8de0-eaf4df430971")
-	)
 	(fp_rect
 		(start -1.325 -1.75)
 		(end 1.325 1.75)
@@ -76,17 +65,6 @@
 		(fill no)
 		(layer "F.SilkS")
 		(uuid "ccf82801-1178-4635-be49-e9090ba762b6")
-	)
-	(fp_circle
-		(center -0.003615 0.710414)
-		(end 0.736385 0.710414)
-		(stroke
-			(width 0.3)
-			(type solid)
-		)
-		(fill no)
-		(layer "F.Paste")
-		(uuid "3f0c1c82-5c80-496e-977a-7d2b1066d643")
 	)
 	(fp_text user "${REFERENCE}"
 		(at 0.5 4 0)
@@ -136,11 +114,23 @@
 		(roundrect_rratio 0.15)
 		(uuid "0ee0fce4-7263-444d-8f30-e36cad21cf34")
 	)
-	(pad "5" smd circle
+	(pad "5" smd custom
 		(at 0 1.45)
 		(size 0.3 0.3)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(thermal_bridge_angle 90)
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_circle
+				(center -0.005 -0.74)
+				(end 0.735 -0.74)
+				(width 0.3)
+				(fill no)
+			)
+		)
 		(uuid "7a403d04-5fcf-4e39-8974-f41f4852c9a6")
 	)
 	(embedded_fonts no)

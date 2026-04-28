@@ -1,0 +1,85 @@
+(footprint "1510-8Ω1W-L60MM_SMT_PADS"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS")
+	(property "Reference" "REF**"
+		(at 0 -4 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "e35359a9-be12-4976-b053-10688ce3e5a5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "1510-8Ω1W-L60MM_SMT_PADS"
+		(at 0.5 5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "673f2d72-b06a-4a45-af87-66167c8b7519")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.lcsc.com/datasheet/C49246975.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "82dccbde-4859-4f68-95f5-acf36321225b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ee9a37ac-e758-40da-b3e2-c45bfd8b4902")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd exclude_from_pos_files)
+	(fp_text user "${REFERENCE}"
+		(at 0.5 6.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "91f039ce-d2be-4bb2-a651-9fc1a80ef982")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at 0 -2)
+		(size 4 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "c1f065fb-2a58-4e0d-b5a4-a33c675a24cf")
+	)
+	(pad "2" smd roundrect
+		(at 0 2)
+		(size 4 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "1c3c5866-fff5-4669-8bde-88e18c70cecd")
+	)
+	(embedded_fonts no)
+)

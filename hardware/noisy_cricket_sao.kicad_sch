@@ -341,7 +341,7 @@
 					)
 				)
 			)
-			(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM"
+			(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_SMT_PADS"
 				(at 0 0 0)
 				(effects
 					(font
@@ -440,6 +440,104 @@
 							(font
 								(size 1.27 1.27)
 							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "noisy_cricket_sao:1510-8Ω1W-L60MM_MECH"
+			(exclude_from_sim yes)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "MECH"
+				(at -2.032 4.826 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "1510-8Ω1W-L60MM_MECH"
+				(at 1.524 -7.874 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_MECH"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.lcsc.com/datasheet/C49246975.pdf"
+				(at -1.27 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "PCB Holes and 3D Model for: 15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS"
+				(at -1.27 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "1510-8Ω1W-L60MM_MECH_0_1"
+				(polyline
+					(pts
+						(xy -0.7915 0.5244) (xy 1.7485 3.0644) (xy 1.7485 -4.5556) (xy -0.7915 -2.0156)
+					)
+					(stroke
+						(width 0)
+						(type dash)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.7915 0.5244) (xy -2.0615 0.5244) (xy -2.0615 -2.0156) (xy -0.7915 -2.0156) (xy -0.7915 0.5244)
+					)
+					(stroke
+						(width 0)
+						(type dash)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "1510-8Ω1W-L60MM_MECH_1_1"
+				(rectangle
+					(start -2.54 3.81)
+					(end 2.54 -5.08)
+					(stroke
+						(width 0)
+						(type dash)
+					)
+					(fill
+						(type color)
+						(color 255 255 194 1)
+					)
+				)
+				(text "PCB HOLES"
+					(at 3.81 -0.762 900)
+					(effects
+						(font
+							(size 1.27 1.27)
 						)
 					)
 				)
@@ -643,6 +741,25 @@
 						)
 					)
 					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 -6.35 180)
+					(length 2.54)
+					(hide yes)
+					(name "EP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -885,7 +1002,7 @@
 							)
 						)
 					)
-					(number "EP"
+					(number "21"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2923,6 +3040,16 @@
 	)
 	(wire
 		(pts
+			(xy 102.87 138.43) (xy 113.03 138.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "68a6e550-3051-460b-93dc-c2286a80ec49")
+	)
+	(wire
+		(pts
 			(xy 83.82 73.66) (xy 83.82 64.77)
 		)
 		(stroke
@@ -3431,15 +3558,25 @@
 		)
 		(uuid "370a5db5-a89d-4469-8a5c-cf7c5b11d5dd")
 	)
-	(label "LED_B"
-		(at 69.85 116.84 0)
+	(label "AMP_SD"
+		(at 104.14 138.43 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "4d2e86ea-6e40-40df-b110-a40b687c1b28")
+		(uuid "66a825d6-5179-415c-836c-484e5c29267f")
+	)
+	(label "LED_B"
+		(at 69.85 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6a2887c3-f4db-4b80-9f58-00b50dd0566a")
 	)
 	(label "SWIO"
 		(at 193.04 127 0)
@@ -3450,6 +3587,16 @@
 			(justify left bottom)
 		)
 		(uuid "6d1d55ba-909e-4ba4-b963-c259b67631fd")
+	)
+	(label "LED_R"
+		(at 69.85 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "76d41d11-abd4-443f-96ca-fcfb63417bfe")
 	)
 	(label "AUDIO"
 		(at 27.94 53.34 0)
@@ -3480,16 +3627,6 @@
 			(justify left bottom)
 		)
 		(uuid "79afb631-eb71-4bb8-a54e-64152349a95c")
-	)
-	(label "LED_R"
-		(at 69.85 121.92 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "7ee30508-03a6-41ba-9d96-d20f02b4fa6b")
 	)
 	(label "RESET"
 		(at 193.04 124.46 0)
@@ -3660,7 +3797,7 @@
 			(uuid "d60014f6-d93e-44da-b6cb-a881e30abf10")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "R7")
 					(unit 1)
@@ -3726,7 +3863,7 @@
 			(uuid "2e65eeb6-e0df-4128-8aa7-285597c99f4f")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "#PWR02")
 					(unit 1)
@@ -3857,7 +3994,7 @@
 			(uuid "c620fb1e-9518-4929-b7b8-7cdb14ca02f0")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "#PWR01")
 					(unit 1)
@@ -3998,7 +4135,7 @@
 			(uuid "7fb33304-f2df-44bd-a83c-68ca3a51229d")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "MIC1")
 					(unit 1)
@@ -4288,8 +4425,11 @@
 		(pin "4"
 			(uuid "38a3bfe3-e015-4f8d-8321-de4aadfe74b8")
 		)
+		(pin "9"
+			(uuid "d8780035-3d15-4ecc-a9fb-d46b018aebf1")
+		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "U1")
 					(unit 1)
@@ -4619,7 +4759,7 @@
 			(uuid "662cd577-965d-441a-a8c3-ae5c772e034f")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "R6")
 					(unit 1)
@@ -4692,89 +4832,9 @@
 			(uuid "123adb38-467f-47a7-af36-6934c2e14929")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "DS1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "noisy_cricket_sao:Debug Pogo 6-Pin")
-		(at 214.63 128.27 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7732c18a-ca70-42f7-a461-0817bdb0876a")
-		(property "Reference" "J2"
-			(at 214.63 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Debug Pogo 6-Pin"
-			(at 214.63 120.65 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "noisy_cricket_sao:Debug Pogo 6-Pin"
-			(at 214.63 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 214.63 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 214.63 128.27 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "6"
-			(uuid "76c45dcc-0ccd-4529-a730-eb07017b6e77")
-		)
-		(pin "5"
-			(uuid "fbd407c7-1c4d-43a9-abc2-cbe9d631986b")
-		)
-		(pin "4"
-			(uuid "f0474301-3ced-4e34-8c26-5b2d557ff4c7")
-		)
-		(pin "3"
-			(uuid "737728a5-b7c5-459c-be67-0315f387e869")
-		)
-		(pin "2"
-			(uuid "d9275458-e2f6-40c4-a107-83004bd1f87c")
-		)
-		(pin "1"
-			(uuid "fdebfbb0-8e82-48f6-a467-0dcb86e38c2e")
-		)
-		(instances
-			(project ""
-				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
-					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -5639,7 +5699,7 @@
 			(uuid "3bc4b5d3-7819-4674-9244-efa409e0856a")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "R5")
 					(unit 1)
@@ -5706,7 +5766,7 @@
 		(pin "10"
 			(uuid "401d7814-aab6-4b25-9da0-ccbd16eff6a6")
 		)
-		(pin "EP"
+		(pin "21"
 			(uuid "7b168689-2588-4ab5-bce0-5ba66ad64e17")
 		)
 		(pin "9"
@@ -5764,7 +5824,7 @@
 			(uuid "407324a0-b2ec-4c89-8cf5-f2f0222dffb0")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "U2")
 					(unit 1)
@@ -5867,7 +5927,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM"
+		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_SMT_PADS"
 			(at 129.54 54.61 0)
 			(effects
 				(font
@@ -5901,7 +5961,7 @@
 			(uuid "d2576e41-eeba-4497-bfa6-34187e249ade")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "SPK1")
 					(unit 1)
@@ -5969,6 +6029,69 @@
 			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "#PWR010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "noisy_cricket_sao:1510-8Ω1W-L60MM_MECH")
+		(at 129.54 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(uuid "c6d80d57-3528-4e34-845c-9e6666894ba8")
+		(property "Reference" "MECH1"
+			(at 127.508 28.194 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1510-8Ω1W-L60MM_MECH"
+			(at 118.872 41.402 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_MECH"
+			(at 129.54 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C49246975.pdf"
+			(at 128.27 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "PCB Holes and 3D Model for: 15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS"
+			(at 128.27 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "noisy_cricket_sao"
+				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
+					(reference "MECH1")
 					(unit 1)
 				)
 			)
@@ -6102,7 +6225,7 @@
 			(uuid "4624a749-dce7-4bc6-b939-57c3b716161e")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "R8")
 					(unit 1)
@@ -6248,9 +6371,89 @@
 			(uuid "fd43ed4c-cd72-44d7-bdd6-5f139d4a0776")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "noisy_cricket_sao:Debug Pogo 6-Pin")
+		(at 214.63 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "e26c284d-8689-42c9-9d10-e8db1d2d5d17")
+		(property "Reference" "J2"
+			(at 214.63 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Debug Pogo 6-Pin"
+			(at 214.63 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "noisy_cricket_sao:Debug Pogo 6-Pin"
+			(at 214.63 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 214.63 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 214.63 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "fa1481c0-f93a-4d1e-8853-374abcfee0cd")
+		)
+		(pin "3"
+			(uuid "228b18fe-2402-47ce-bb18-073910ba3cb6")
+		)
+		(pin "1"
+			(uuid "5c113bcb-63d8-405f-ab32-05fa58e6f05b")
+		)
+		(pin "2"
+			(uuid "10331fe1-6ca7-4f09-9df7-2aacf6d610ba")
+		)
+		(pin "6"
+			(uuid "2d29d24e-15d8-4d56-9bb7-dc68722399c1")
+		)
+		(pin "4"
+			(uuid "725d8637-ae65-4c74-b0e4-f0c78e515151")
+		)
+		(instances
+			(project "noisy_cricket_sao"
+				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -6445,7 +6648,7 @@
 			(uuid "a2898949-3370-4ed3-811c-e2843af20070")
 		)
 		(instances
-			(project ""
+			(project "noisy_cricket_sao"
 				(path "/3f7eb731-322c-463d-a9ad-01b80ab04f9c"
 					(reference "C2")
 					(unit 1)

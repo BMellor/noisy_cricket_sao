@@ -22,7 +22,7 @@
 				)
 			)
 		)
-		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM"
+		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_SMT_PADS"
 			(at 0 0 0)
 			(effects
 				(font
@@ -121,6 +121,104 @@
 						(font
 							(size 1.27 1.27)
 						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+	(symbol "1510-8Ω1W-L60MM_MECH"
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board yes)
+		(property "Reference" "MECH"
+			(at -2.032 4.826 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1510-8Ω1W-L60MM_MECH"
+			(at 1.524 -7.874 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "noisy_cricket_sao:1510-8Ω1W-L60MM_MECH"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C49246975.pdf"
+			(at -1.27 8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "PCB Holes and 3D Model for: 15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS"
+			(at -1.27 8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "1510-8Ω1W-L60MM_MECH_0_1"
+			(polyline
+				(pts
+					(xy -0.7915 0.5244) (xy 1.7485 3.0644) (xy 1.7485 -4.5556) (xy -0.7915 -2.0156)
+				)
+				(stroke
+					(width 0)
+					(type dash)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy -0.7915 0.5244) (xy -2.0615 0.5244) (xy -2.0615 -2.0156) (xy -0.7915 -2.0156) (xy -0.7915 0.5244)
+				)
+				(stroke
+					(width 0)
+					(type dash)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "1510-8Ω1W-L60MM_MECH_1_1"
+			(rectangle
+				(start -2.54 3.81)
+				(end 2.54 -5.08)
+				(stroke
+					(width 0)
+					(type dash)
+				)
+				(fill
+					(type color)
+					(color 255 255 194 1)
+				)
+			)
+			(text "PCB HOLES"
+				(at 3.81 -0.762 900)
+				(effects
+					(font
+						(size 1.27 1.27)
 					)
 				)
 			)
@@ -324,6 +422,25 @@
 					)
 				)
 				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 10.16 -6.35 180)
+				(length 2.54)
+				(hide yes)
+				(name "EP"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "9"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -566,7 +683,7 @@
 						)
 					)
 				)
-				(number "EP"
+				(number "21"
 					(effects
 						(font
 							(size 1.27 1.27)

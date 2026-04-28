@@ -1,0 +1,174 @@
+(footprint "1510-8Ω1W-L60MM_MECH"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS")
+	(property "Reference" "REF**"
+		(at 9 -4 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "29841ec5-4963-4c7d-b9d8-6dd006e85f79")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "1510-8Ω1W-L60MM_MECH"
+		(at 0.5 6 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "6e4fe7ab-3e01-45a5-8ad9-5c5e7bf4b97e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.lcsc.com/datasheet/C49246975.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "98911170-7675-4933-9378-accb0ecc58f5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4d006d09-210f-4402-806a-e669c643bfdc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd exclude_from_pos_files exclude_from_bom)
+	(fp_line
+		(start -2.5 -5)
+		(end 2.5 -5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "dd735277-2cb1-4e03-8eff-dd190849539d")
+	)
+	(fp_line
+		(start -2.5 5)
+		(end 2.5 5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "0f2bc4b9-667b-4ea2-8d9b-db8e03f0519f")
+	)
+	(fp_arc
+		(start -2.5 5)
+		(mid -7.5 0)
+		(end -2.5 -5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "b4d28ba3-b6b2-4338-8c4d-a8e5ff008e5a")
+	)
+	(fp_arc
+		(start 2.5 -5)
+		(mid 7.5 0)
+		(end 2.5 5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "ca0f0b17-a7be-4167-a546-f629e3cb5c1c")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0.5 7.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "91f039ce-d2be-4bb2-a651-9fc1a80ef982")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -4.5 0)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "4320ee6f-24f9-4694-b134-adae6cb2fd00")
+	)
+	(pad "" np_thru_hole circle
+		(at -3.5 -2.75)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "f7a495c0-ddc4-48fa-9fa7-b9415f1fc7af")
+	)
+	(pad "" np_thru_hole circle
+		(at -3.5 2.75)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "572d4378-e2b2-4b4b-8edb-b756d937fc09")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 1 1)
+		(drill 3.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "f2728e6c-4e48-4b01-a4b0-2c92e27d2841")
+	)
+	(pad "" np_thru_hole circle
+		(at 3.5 -2.75)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "3a6a33d7-d83f-4410-874d-2b22c034c38f")
+	)
+	(pad "" np_thru_hole circle
+		(at 3.5 2.75)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "ac0b3116-7a2c-43c9-841c-db7db03bf3b1")
+	)
+	(pad "" np_thru_hole circle
+		(at 4.5 0)
+		(size 1 1)
+		(drill 2)
+		(layers "*.Cu" "*.Mask")
+		(uuid "3a23a35f-9b65-49cc-9e1c-b4dbb63951e0")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/noisy_cricket_sao.pretty/1510-8Ω1W-L60MM.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
