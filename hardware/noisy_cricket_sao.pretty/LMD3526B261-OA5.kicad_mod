@@ -1,14 +1,14 @@
 (footprint "LMD3526B261-OA5"
-	(version 20241229)
+	(version 20260206)
 	(generator "pcbnew")
-	(generator_version "9.0")
+	(generator_version "10.0")
 	(layer "F.Cu")
 	(descr "Omnidirectional -26dB 61dB SMD-5P,3.5x2.7mm Microphone RoHS")
 	(property "Reference" "REF**"
 		(at 0.5 -2.5 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "a9693b9b-a529-4ad1-affc-eec13c173bf1")
+		(uuid "ddd1df24-c03f-466d-95e8-2e820ba17d91")
 		(effects
 			(font
 				(size 1 1)
@@ -20,7 +20,7 @@
 		(at 0.5 2.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "6febe13e-e977-47bc-a857-39b200780258")
+		(uuid "d441fff8-e42c-40cc-ae46-e8530494d682")
 		(effects
 			(font
 				(size 1 1)
@@ -33,7 +33,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "4cebd50a-9fa9-4dec-ab5d-73d08aeffdb8")
+		(uuid "9267cf4a-5326-4b07-9f8b-ef7082378e9f")
 		(effects
 			(font
 				(size 1 1)
@@ -46,7 +46,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "d9c4caf2-e70c-4bcc-99db-dd64ebc538eb")
+		(uuid "86a59452-558c-487e-b4d5-66330887eca9")
 		(effects
 			(font
 				(size 1 1)
@@ -55,6 +55,7 @@
 		)
 	)
 	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
 	(fp_rect
 		(start -1.325 -1.75)
 		(end 1.325 1.75)
@@ -64,13 +65,57 @@
 		)
 		(fill no)
 		(layer "F.SilkS")
-		(uuid "ccf82801-1178-4635-be49-e9090ba762b6")
+		(uuid "73112ae4-6243-473b-9f8d-03ddd23ab450")
+	)
+	(fp_arc
+		(start -0.684612 0.415388)
+		(mid -0.525 0.175)
+		(end -0.284612 0.015388)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "37bbee74-8a17-4a3e-b411-184bbffc2eae")
+	)
+	(fp_arc
+		(start -0.284612 1.4)
+		(mid -0.525 1.240388)
+		(end -0.684612 1)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "0420f42c-a387-4f2b-b4ae-55cc0f6c0f15")
+	)
+	(fp_arc
+		(start 0.275 0.025)
+		(mid 0.515388 0.184612)
+		(end 0.675 0.425)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "cec78185-9e11-437e-b367-ffe439a67332")
+	)
+	(fp_arc
+		(start 0.682912 0.997074)
+		(mid 0.525 1.234902)
+		(end 0.287172 1.392814)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "6d808513-8a4a-4809-820a-55e428180196")
 	)
 	(fp_text user "${REFERENCE}"
 		(at 0.5 4 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "395a8e58-832e-4fcc-a78a-2d5bfb0c136b")
+		(uuid "2c386b97-b6df-4c73-ab69-9356f717c7b0")
 		(effects
 			(font
 				(size 1 1)
@@ -84,40 +129,40 @@
 		(drill 0.32)
 		(layers "*.Cu" "*.Mask")
 		(thermal_bridge_angle 90)
-		(uuid "108c7834-3b74-479c-94a1-0701ec8b5678")
+		(uuid "58d9d61e-e6c9-4161-bbd9-70cddab77aeb")
 	)
 	(pad "1" smd roundrect
 		(at -0.835 -1.36)
 		(size 0.73 0.52)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "abd81953-ef69-49cd-9819-a8bcdc99cdac")
+		(uuid "3daabd2d-c3f9-469b-9336-1be59c922f4f")
 	)
 	(pad "2" smd roundrect
 		(at -0.835 -0.54)
 		(size 0.73 0.52)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "5de8b7ec-b947-412e-a329-551954782dd7")
+		(uuid "1deda367-06d2-4e8b-af21-ce814fdd1fec")
 	)
 	(pad "3" smd roundrect
 		(at 0.835 -0.54)
 		(size 0.73 0.52)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "d7615873-9c6b-4d6c-915a-c015969104aa")
+		(uuid "8f99e74f-0d3b-4b5f-8bd6-5f0ff18b48ed")
 	)
 	(pad "4" smd roundrect
 		(at 0.835 -1.36)
 		(size 0.73 0.52)
 		(layers "F.Cu" "F.Mask" "F.Paste")
 		(roundrect_rratio 0.15)
-		(uuid "0ee0fce4-7263-444d-8f30-e36cad21cf34")
+		(uuid "5bf57267-224b-4cff-9eea-2f5c609ba6fa")
 	)
 	(pad "5" smd custom
 		(at 0 1.45)
 		(size 0.3 0.3)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Mask")
 		(thermal_bridge_angle 90)
 		(options
 			(clearance outline)
@@ -131,7 +176,7 @@
 				(fill no)
 			)
 		)
-		(uuid "7a403d04-5fcf-4e39-8974-f41f4852c9a6")
+		(uuid "8bcd1ce4-b5a0-4a62-b2b7-73b367cba65c")
 	)
 	(embedded_fonts no)
 	(model "${KIPRJMOD}/noisy_cricket_sao.pretty/LMD3526B261-OA5.step"
