@@ -1,0 +1,7 @@
+~/.local/bin/kikit panelize \
+    --layout 'grid; rows: 2; cols: 3; space: 2mm' \
+    --tabs 'fixed; width: 3.5mm' \
+    --cuts 'mousebites; drill: 0.5mm; spacing: 1mm; offset: 0.0mm; prolong: 0.5mm' \
+    --post 'millradius: 1mm' \
+    noisy_cricket_sao.kicad_pcb \
+    noisy_cricket_sao_panel.kicad_pcb
