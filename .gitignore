@@ -79,12 +79,14 @@ fp-info-cache
 
 # Executables
 *.exe
-*.out
+*.outs
 *.app
 *.i*86
 *.x86_64
 *.hex
 *.elf
+*.bin
+*.lst
 
 # Debug files
 *.dSYM/
