@@ -5,11 +5,11 @@
 
 uint32_t count;
 
-#define AUDIO_PORT GPIOD
-#define AUDIO_PIN 2
+#define AUDIO_PORT GPIOC
+#define AUDIO_PIN 3
 
-#define AMP_SD_PORT GPIOD
-#define AMP_SD_PIN 3
+// #define AMP_SD_PORT GPIOC
+// #define AMP_SD_PIN 3
 
 const uint8_t sine8[8] = {128, 218, 255, 218, 128, 37, 0, 37};
 const uint8_t sine16[16] = {128, 176, 218, 245, 255, 245, 218, 176, 128, 79, 37, 10, 0, 10, 37, 79};
@@ -39,7 +39,7 @@ void TIM2_IRQHandler(void)
 	TIM2->INTFR &= ~TIM_UIF; // Clear ISR flag
 	NVIC_ClearPendingIRQ(TIM2_IRQn);
 	sine_idx = (sine_idx < (WAVE_TABLE_LENGTH-1)) ? sine_idx+1 : 0;
-	TIM1->CH1CVR = WAVE_TABLE_NAME[sine_idx];// / 8; // ###################### Put back in volume divider
+	TIM1->CH3CVR = WAVE_TABLE_NAME[sine_idx] / 4; // ###################### Put back in volume divider
 }
 
 int main()
@@ -47,12 +47,16 @@ int main()
 	SystemInit(); // Default 48Mhz internal osc, 1kHz SysTick (no IRQ)
 
 	// Enable GPIO clocks
-	RCC->APB2PCENR |= RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD;
+	RCC->APB2PCENR |= RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD | RCC_APB2Periph_AFIO ;
+
+	// AFIO->PCFR1 = 0x02 << 10;
 
 	// ##### Setup TIM1 to generate PWM #####
 	// PA1 is T1CH2, 10MHz Output alt func, push-pull
 	AUDIO_PORT->CFGLR &= ~(0xf<<(4*AUDIO_PIN));
 	AUDIO_PORT->CFGLR |= (GPIO_Speed_2MHz | GPIO_CNF_OUT_PP_AF)<<(4*AUDIO_PIN);
+
+	
 
 	// Enable clock and reset TIM1
 	RCC->APB2PCENR |= RCC_APB2Periph_TIM1;
@@ -64,13 +68,13 @@ int main()
 	TIM1->ATRLR = 255;
 	
 	// Enable CH1 output, positive pol
-	TIM1->CCER |= TIM_CC1E | TIM_CC1P;
+	TIM1->CCER |= TIM_CC3E | TIM_CC3P;
 
-	// CH1 Mode is output, PWM1 (CC1S = 00, OC1M = 110)
-	TIM1->CHCTLR1 |= TIM_OC1M_2 | TIM_OC1M_1 | TIM_OC1PE;
+	// CH3 Mode is output, PWM1 (CC1S = 00, OC1M = 110)
+	TIM1->CHCTLR2 |= TIM_OC3M_2 | TIM_OC3M_1 | TIM_OC3PE;
 	
 	// Set the Capture Compare Register to zero bias
-	TIM1->CH1CVR = 10;
+	TIM1->CH3CVR = 127;
 	
 	// Reload immediately
 	TIM1->SWEVGR |= TIM_UG;
@@ -92,27 +96,27 @@ int main()
  	set_freq(1000);
 	
 	// Enable update interrupt
-	TIM2->DMAINTENR |= TIM_UIE;
-	NVIC_EnableIRQ(TIM2_IRQn);
+	// TIM2->DMAINTENR |= TIM_UIE;
+	// NVIC_EnableIRQ(TIM2_IRQn);
 	
 	// Enable TIM2
-	TIM2->CTLR1 |= TIM_CEN;
+	// TIM2->CTLR1 |= TIM_CEN;
 
 	__enable_irq();
 
-	// PA2 is heartbeat
-    AMP_SD_PORT->CFGLR &= ~(0xf<<(4*AMP_SD_PIN));
-    AMP_SD_PORT->CFGLR |= (GPIO_Speed_2MHz | GPIO_CNF_OUT_PP)<<(4*AMP_SD_PIN);
-	AMP_SD_PORT->BSHR = (1<<(AMP_SD_PIN+16));
+	// PA2 is amp enable
+    // AMP_SD_PORT->CFGLR &= ~(0xf<<(4*AMP_SD_PIN));
+    // AMP_SD_PORT->CFGLR |= (GPIO_Speed_2MHz | GPIO_CNF_OUT_PP)<<(4*AMP_SD_PIN);
+	// AMP_SD_PORT->BSHR = (1<<(AMP_SD_PIN + 16));
 	while(1)
 	{
-		//__WFI();
-		Delay_Ms(500);
-		// Set pin (led off)
-		AMP_SD_PORT->BSHR = (1<<AMP_SD_PIN);
-		Delay_Ms(500);
-		// Clear pin (led on)
-		AMP_SD_PORT->BSHR = (1<<(AMP_SD_PIN+16));
+		__WFI();
+		// Delay_Ms(500);
+		// // Set pin (led off)
+		// AMP_SD_PORT->BSHR = (1<<AMP_SD_PIN);
+		// Delay_Ms(500);
+		// // Clear pin (led on)
+		// AMP_SD_PORT->BSHR = (1<<(AMP_SD_PIN+16));
 	}
 }
 
