@@ -4087,7 +4087,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "68k"
+		(property "Value" "20k"
 			(at 74.93 48.2599 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6164,7 +6164,7 @@
 				)
 			)
 		)
-		(property "Value" "220pF"
+		(property "Value" "820pF"
 			(at 89.408 48.26 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6245,7 +6245,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "0.39uF"
+		(property "Value" "1uF"
 			(at 170.18 95.2499 0)
 			(show_name no)
 			(do_not_autoplace no)
