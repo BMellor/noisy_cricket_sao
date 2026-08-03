@@ -1778,12 +1778,6 @@
 		(path "/c64c154b-b100-448d-9054-543e16ce7f67")
 		(sheetname "/")
 		(sheetfile "noisy_cricket_sao.kicad_sch")
-		(units
-			(unit
-				(name "A")
-				(pins "1" "2")
-			)
-		)
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_text user "${REFERENCE}"
@@ -1801,7 +1795,7 @@
 		(pad "1" smd roundrect
 			(at 0 -2)
 			(size 4 2)
-			(layers "F.Cu" "F.Mask" "F.Paste")
+			(layers "F.Cu" "F.Mask")
 			(roundrect_rratio 0.15)
 			(net "Net-(SPK1-+)")
 			(pinfunction "+_1")
@@ -1811,7 +1805,7 @@
 		(pad "2" smd roundrect
 			(at 0 2)
 			(size 4 2)
-			(layers "F.Cu" "F.Mask" "F.Paste")
+			(layers "F.Cu" "F.Mask")
 			(roundrect_rratio 0.15)
 			(net "Net-(SPK1--)")
 			(pinfunction "-_2")

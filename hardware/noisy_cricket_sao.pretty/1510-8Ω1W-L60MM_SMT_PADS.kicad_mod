@@ -1,14 +1,14 @@
 (footprint "1510-8Ω1W-L60MM_SMT_PADS"
-	(version 20241229)
+	(version 20260206)
 	(generator "pcbnew")
-	(generator_version "9.0")
+	(generator_version "10.0")
 	(layer "F.Cu")
 	(descr "15x10mm 8Ω Electromagnetic 900Hz 88dB 1W Speakers RoHS")
 	(property "Reference" "REF**"
 		(at 0 -4 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "e35359a9-be12-4976-b053-10688ce3e5a5")
+		(uuid "19b3ab56-4a0b-45aa-9ae1-448220cf58d9")
 		(effects
 			(font
 				(size 1 1)
@@ -20,7 +20,7 @@
 		(at 0.5 5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "673f2d72-b06a-4a45-af87-66167c8b7519")
+		(uuid "c23992e5-0e89-46a2-a7a3-5152067c2764")
 		(effects
 			(font
 				(size 1 1)
@@ -33,7 +33,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "82dccbde-4859-4f68-95f5-acf36321225b")
+		(uuid "a657fdc3-63d4-4fa8-a318-b88e857b99c4")
 		(effects
 			(font
 				(size 1 1)
@@ -46,7 +46,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "ee9a37ac-e758-40da-b3e2-c45bfd8b4902")
+		(uuid "b1a9c7a7-ea5a-4077-8a97-755793913c78")
 		(effects
 			(font
 				(size 1 1)
@@ -55,11 +55,12 @@
 		)
 	)
 	(attr smd exclude_from_pos_files)
+	(duplicate_pad_numbers_are_jumpers no)
 	(fp_text user "${REFERENCE}"
 		(at 0.5 6.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "91f039ce-d2be-4bb2-a651-9fc1a80ef982")
+		(uuid "9531060a-43e8-4556-a5b9-b79e9f58b219")
 		(effects
 			(font
 				(size 1 1)
@@ -70,16 +71,16 @@
 	(pad "1" smd roundrect
 		(at 0 -2)
 		(size 4 2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Mask")
 		(roundrect_rratio 0.15)
-		(uuid "c1f065fb-2a58-4e0d-b5a4-a33c675a24cf")
+		(uuid "05c8f227-547f-4383-9ff7-da446b985368")
 	)
 	(pad "2" smd roundrect
 		(at 0 2)
 		(size 4 2)
-		(layers "F.Cu" "F.Mask" "F.Paste")
+		(layers "F.Cu" "F.Mask")
 		(roundrect_rratio 0.15)
-		(uuid "1c3c5866-fff5-4669-8bde-88e18c70cecd")
+		(uuid "6fa8d250-1990-4932-8228-2cb14d7abb3e")
 	)
 	(embedded_fonts no)
 )
