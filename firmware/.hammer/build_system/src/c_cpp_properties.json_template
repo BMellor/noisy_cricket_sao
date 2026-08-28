@@ -1,0 +1,36 @@
+\{
+  "configurations": [
+    \{
+      "name": "GCC-ARM",
+      "intelliSenseMode": "gcc-arm",
+      "includePath": [
+{{- for include_path in include_paths }}
+        "{include_path}"
+{{- if @last }}{{ else }},{{ endif }}
+{{- endfor }}
+      ],
+      "defines": [
+{{- for define in defines }}
+        "{define}"
+{{- if @last }}{{ else }},{{ endif }}
+{{- endfor }}
+      ],
+      "compilerArgs": [
+{{- for compiler_arg in compiler_args }}
+        "{compiler_arg}"
+{{- if @last }}{{ else }},{{ endif }}
+{{- endfor }}
+      ],
+      "compilerPath": "{compiler_path}",
+      "cStandard": "{c_standard}",
+      "cppStandard": "{cpp_standard}",
+      "browse": \{
+        "path": [
+          "$\{workspaceFolder}"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ],
+  "version": 4
+}

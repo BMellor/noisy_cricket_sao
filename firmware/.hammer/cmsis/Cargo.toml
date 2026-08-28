@@ -1,0 +1,18 @@
+[package]
+name = "cmsis"
+version = "5.7.0"
+authors = ["Alex Ferro <alexferro@aereldesign.com>"]
+edition = "2018"
+publish = false
+
+[lib]
+path = "lib.rs"
+
+[package.metadata.hammer]
+type = "arm-cortex-m-gcc" # This is the only supported embedded type
+[package.metadata.hammer.dependencies]
+build_system = "^1.5"
+
+[dependencies]
+build_system = { path="../build_system" }
+bitflags = "1"

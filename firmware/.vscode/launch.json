@@ -1,48 +1,58 @@
 {
-	"configurations": [
-		{
-			"name": "Debug Target",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/noisy_cricket.elf",
-			"args": [],
-			"stopAtEntry": true,
-			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"externalConsole": false,
-			"MIMode": "gdb",
-			"preLaunchTask": "run_flash_and_gdbserver",
-			"setupCommands": [
-				{
-					"description": "Enable pretty-printing for gdb",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
-				}
-			],
-			"svdPath": "${workspaceFolder}/ch32fun/misc/CH32V003xx.svd", // extension 'Peripheral Viewer' by mcu-debug (cortex-debug)
-			"miDebuggerPath": "gdb-multiarch",
-			"miDebuggerServerAddress": "127.0.0.1:3333",
-		},
-		{
-			"name": "Flash and run in terminal",
-			"type": "node-terminal",
-			"request": "launch",
-			"internalConsoleOptions": "neverOpen",
-			"command": "make closechlink clean; make flash monitor",
-		},
-		{
-			"name": "Compile and Flash",
-			"type": "node",
-			"request": "launch",
-			"internalConsoleOptions": "neverOpen",
-			"preLaunchTask" : "kill_all_tasks",
-			"postDebugTask": "run_flash",
-			"presentation": {
-				"hidden": false,
-				"group": "terminaloutput",
-				"order": 1
-			},
-			"runtimeExecutable": "echo"
-		}
-	]
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug FreeRTOS",
+            "cwd": "${workspaceRoot}",
+            "executable": "./target/build/stm32h7_speaker_client.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "stlink",
+            "rtos": "FreeRTOS",
+            "device": "STM32H730VB",
+            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
+            "interface": "swd",
+            "preLaunchTask": "build",
+            "runToEntryPoint": "main",
+        },
+        {
+            "name": "Cortex Attach FreeRTOS",
+            "cwd": "${workspaceRoot}",
+            "executable": "./target/build/stm32h7_speaker_client.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "stlink",
+            "rtos": "FreeRTOS",
+            "device": "STM32H730VB",
+            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
+            "interface": "swd",
+        },
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "./target/build/stm32h7_speaker_client.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "stlink",
+            "device": "STM32H730VB",
+            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
+            "interface": "swd",
+            "preLaunchTask": "build",
+            "runToEntryPoint": "main",
+        },
+        {
+            "name": "Cortex Attach",
+            "cwd": "${workspaceRoot}",
+            "executable": "./target/build/stm32h7_speaker_client.elf",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "stlink",
+            "device": "STM32H730VB",
+            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
+            "interface": "swd",
+        }
+    ]
 }

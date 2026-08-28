@@ -1,0 +1,27 @@
+[package]
+name = "build_system"
+version = "1.11.1"
+authors = [
+  "Alex Ferro <alextm@ferrouscanine.com>",
+  "Alex Ferro <alexferro@aereldesign.com>",
+]
+edition = "2021"
+
+publish = false
+[package.metadata.release]
+dev-version = true
+
+[features]
+template_engine = []
+
+[dependencies]
+rayon = "1"
+which = { version = "^3.1.1", default-features = false }
+seahash = "3"
+ihex = "3"
+tinytemplate = { version = "1.1" }
+serde = { version = "1.0", features = ["derive"] }
+semver = { version = "1", features = ["serde"] }
+flate2 = "1.0.35"
+tar = "0.4.43"
+ignore = "0.4.23"
