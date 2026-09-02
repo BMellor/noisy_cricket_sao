@@ -1,14 +1,8 @@
 #include <ti/devices/msp/msp.h>
 #include <ti/driverlib/dl_gpio.h>
 #include <ti/driverlib/m0p/dl_sysctl.h>
-#define LED_R_PIN (1 << 23)
-#define LED_R_IOMUX (IOMUX_PINCM24)
 
-#define LED_G_PIN (1 << 24)
-#define LED_G_IOMUX (IOMUX_PINCM25)
-
-#define LED_B_PIN (1 << 25)
-#define LED_B_IOMUX (IOMUX_PINCM26)
+#include "pins.h"
 
 int main(void) {
 
@@ -20,22 +14,26 @@ int main(void) {
   DL_SYSCTL_setMCLKDivider(DL_SYSCTL_MCLK_DIVIDER_DISABLE);
   DL_SYSCTL_setBORThreshold(DL_SYSCTL_BOR_THRESHOLD_LEVEL_0);
 
-  DL_GPIO_initDigitalOutput(IOMUX_PINCM24);
-  DL_GPIO_initDigitalOutput(IOMUX_PINCM25);
-  DL_GPIO_initDigitalOutput(IOMUX_PINCM26);
-  DL_GPIO_enableOutput(GPIOA, LED_R_PIN | LED_G_PIN | LED_B_PIN);
-  DL_GPIO_setPins(GPIOA, LED_R_PIN | LED_G_PIN | LED_B_PIN);
+  DL_GPIO_initDigitalOutput(LED_R.iomux);
+  DL_GPIO_initDigitalOutput(LED_G.iomux);
+  DL_GPIO_initDigitalOutput(LED_B.iomux);
+  DL_GPIO_enableOutput(LED_R.port, LED_R.pinmask);
+  DL_GPIO_enableOutput(LED_G.port, LED_G.pinmask);
+  DL_GPIO_enableOutput(LED_B.port, LED_B.pinmask);
+  DL_GPIO_setPins(LED_R.port, LED_R.pinmask);
+  DL_GPIO_setPins(LED_G.port, LED_G.pinmask);
+  DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
 
   while (1) {
 
-    DL_GPIO_setPins(GPIOA, LED_B_PIN);
-    DL_GPIO_clearPins(GPIOA, LED_R_PIN);
+    DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
+    DL_GPIO_clearPins(LED_R.port, LED_R.pinmask);
     DL_Common_delayCycles(4000000);
-    DL_GPIO_setPins(GPIOA, LED_R_PIN);
-    DL_GPIO_clearPins(GPIOA, LED_G_PIN);
+    DL_GPIO_setPins(LED_R.port, LED_R.pinmask);
+    DL_GPIO_clearPins(LED_G.port, LED_G.pinmask);
     DL_Common_delayCycles(4000000);
-    DL_GPIO_setPins(GPIOA, LED_G_PIN);
-    DL_GPIO_clearPins(GPIOA, LED_B_PIN);
+    DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
+    DL_GPIO_clearPins(LED_B.port, LED_B.pinmask);
     DL_Common_delayCycles(4000000);
   }
 }
