@@ -4,9 +4,9 @@
       "name": "GCC-ARM",
       "intelliSenseMode": "gcc-arm",
       "includePath": [
-        "/Users/bmellor/git_repos/noisy_cricket_sao/firmware/.hammer/cmsis/Core/Include",
-        "/Users/bmellor/git_repos/noisy_cricket_sao/firmware/mspm0",
-        "src/inc"
+        "/home/brentmellor/git_repos/noisy_cricket_sao/firmware/.hammer/cmsis/Core/Include",
+        "/home/brentmellor/git_repos/noisy_cricket_sao/firmware/mspm0",
+        "/home/brentmellor/git_repos/noisy_cricket_sao/firmware/src/inc"
       ],
       "defines": [
         "CORTEX_USE_FPU=FALSE",
@@ -20,7 +20,7 @@
         "-mno-thumb-interwork",
         "-mthumb"
       ],
-      "compilerPath": "/Applications/ArmGNUToolchain/13.3.rel1/arm-none-eabi/bin/arm-none-eabi-g++",
+      "compilerPath": "/usr/bin/arm-none-eabi-g++",
       "cStandard": "c11",
       "cppStandard": "c++17",
       "browse": {

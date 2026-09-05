@@ -31,7 +31,6 @@
 //   DL_TimerG_setClockConfig(TIMG14, (DL_TimerG_ClockConfig *) &gClockConfig);
 //   DL_TimerG_initTimerMode(TIMG14, (DL_TimerG_TimerConfig *) &gTimerConfig);
 
-
 //   // Start timer/PWM
 //   DL_TimerG_enableClock(TIMG14);
 // }
@@ -48,7 +47,7 @@ int main(void) {
   DL_GPIO_enablePower(GPIOA);
   DL_Common_delayCycles(16);
 
-  //led_init();
+  // led_init();
 
   // DL_GPIO_initDigitalOutput(LED_R.iomux);
   // DL_GPIO_initDigitalOutput(LED_G.iomux);

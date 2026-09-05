@@ -1,7 +1,7 @@
 #pragma once
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 uint32_t get_timestamp_ms();
 
