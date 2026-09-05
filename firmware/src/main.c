@@ -2,38 +2,10 @@
 #include <ti/driverlib/m0p/dl_sysctl.h>
 
 #include <ti/driverlib/dl_gpio.h>
-#include <ti/driverlib/dl_timerg.h>
 
+#include "led.h"
 #include "pins.h"
-
-// void led_init(void) {
-//   DL_GPIO_initPeripheralOutputFunction(LED_R.iomux, IOMUX_PINCM24_PF_TIMG14_CCP0);
-//   DL_GPIO_initPeripheralOutputFunction(LED_G.iomux, IOMUX_PINCM25_PF_TIMG14_CCP1);
-//   DL_GPIO_initPeripheralOutputFunction(LED_B.iomux, IOMUX_PINCM26_PF_TIMG14_CCP3);
-
-//   // Setup TIMG14 for ~976Hz PWM
-//   // Timer clock configuration to be sourced by BUSCLK (24000000 Hz)
-//   // timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
-//   //   24 kHz = 24000000 Hz / (1 * (23 + 1))
-//   DL_TimerG_ClockConfig gClockConfig = {
-//       .clockSel    = DL_TIMER_CLOCK_BUSCLK,
-//       .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
-//       .prescale    = 23U,
-//   };
-
-//   // Downcounting, preload to 10-bit value, set timer enable
-//   DL_TimerG_TimerConfig gTimerConfig = {
-//       .period     = 1024U,
-//       .timerMode  = DL_TIMER_TIMER_MODE_PERIODIC,
-//       .startTimer = DL_TIMER_START,
-//   };
-//   DL_TimerG_enablePower(TIMG14);
-//   DL_TimerG_setClockConfig(TIMG14, (DL_TimerG_ClockConfig *) &gClockConfig);
-//   DL_TimerG_initTimerMode(TIMG14, (DL_TimerG_TimerConfig *) &gTimerConfig);
-
-//   // Start timer/PWM
-//   DL_TimerG_enableClock(TIMG14);
-// }
+#include "timebase.h"
 
 int main(void) {
 
@@ -47,27 +19,60 @@ int main(void) {
   DL_GPIO_enablePower(GPIOA);
   DL_Common_delayCycles(16);
 
-  // led_init();
+  timebase_init();
+  led_init();
 
-  // DL_GPIO_initDigitalOutput(LED_R.iomux);
-  // DL_GPIO_initDigitalOutput(LED_G.iomux);
+  uint8_t r = 0;
+  uint8_t g = 0;
+  uint8_t b = 255;
+  uint8_t state = 0;
+
   // DL_GPIO_initDigitalOutput(LED_B.iomux);
-  // DL_GPIO_enableOutput(LED_R.port, LED_R.pinmask);
-  // DL_GPIO_enableOutput(LED_G.port, LED_G.pinmask);
   // DL_GPIO_enableOutput(LED_B.port, LED_B.pinmask);
-  // DL_GPIO_setPins(LED_R.port, LED_R.pinmask);
-  // DL_GPIO_setPins(LED_G.port, LED_G.pinmask);
-  // DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
 
   while (1) {
-    // DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
-    // DL_GPIO_clearPins(LED_R.port, LED_R.pinmask);
-    // DL_Common_delayCycles(4000000);
-    // DL_GPIO_setPins(LED_R.port, LED_R.pinmask);
-    // DL_GPIO_clearPins(LED_G.port, LED_G.pinmask);
-    // DL_Common_delayCycles(4000000);
-    // DL_GPIO_setPins(LED_B.port, LED_B.pinmask);
-    // DL_GPIO_clearPins(LED_B.port, LED_B.pinmask);
-    DL_Common_delayCycles(4000000);
+    // delay_ms(1000);
+    // DL_GPIO_togglePins(LED_B.port, LED_B.pinmask);
+
+    delay_ms(10);
+    led_set_rgb(r, g, b);
+    switch (state) {
+    case 0: // red up
+      if (r < 255)
+        r++;
+      else
+        state++;
+      break;
+    case 1: // blue down
+      if (b > 0)
+        b--;
+      else
+        state++;
+      break;
+    case 2: // green up
+      if (g < 255)
+        g++;
+      else
+        state++;
+      break;
+    case 3: // red down
+      if (r > 0)
+        r--;
+      else
+        state++;
+      break;
+    case 4: // blue up
+      if (b < 255)
+        b++;
+      else
+        state++;
+      break;
+    default: // green down
+      if (g > 0)
+        g--;
+      else
+        state = 0;
+      break;
+    }
   }
 }
