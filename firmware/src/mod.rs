@@ -5,4 +5,6 @@ pub fn add(state: &mut State) {
     add_c_file!(state, "main.c");
     add_c_file!(state, "timebase.c");
     add_c_file!(state, "led.c");
+    add_c_file!(state, "audio.c");
+    add_c_file!(state, "mic.c");
 }
