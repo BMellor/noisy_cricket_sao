@@ -19,17 +19,13 @@ static const uint8_t gamma8[256] = {
     169, 171, 173, 176, 178, 180, 182, 185, 187, 189, 192, 194, 196, 199, 201, 203, 206, 208, 211, 213, 216, 218,
     221, 223, 226, 228, 231, 234, 236, 239, 242, 244, 247, 250, 253, 255};
 
-static inline void set_red(uint8_t value) {
-  DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[value], DL_TIMER_CC_0_INDEX);
+void led_set_red(uint8_t value) { DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_0_INDEX); }
+
+void led_set_green(uint8_t value) {
+  DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_1_INDEX);
 }
 
-static inline void set_green(uint8_t value) {
-  DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[value], DL_TIMER_CC_1_INDEX);
-}
-
-static inline void set_blue(uint8_t value) {
-  DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[value], DL_TIMER_CC_3_INDEX);
-}
+void led_set_blue(uint8_t value) { DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_3_INDEX); }
 
 void led_init(void) {
   // Power up & reset the timer
@@ -54,7 +50,7 @@ void led_init(void) {
 
   // Setup capture/compare channels for PWM
   DL_TimerG_PWMConfig pwmConfig = {
-      .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
+      .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
       .period = 255,
       .isTimerWithFourCC = true, // TIMG14 has 4 CC channels
       .startTimer = DL_TIMER_STOP,
@@ -64,18 +60,16 @@ void led_init(void) {
   // CC0 = Red, CC1 = Green, CC3 = Blue
   DL_TimerG_setCCPDirection(TIMG14, DL_TIMER_CC0_OUTPUT | DL_TIMER_CC1_OUTPUT | DL_TIMER_CC3_OUTPUT);
 
-  set_red(0);
-  set_green(0);
-  set_blue(0);
+  led_set_rgb(0, 0, 0);
 
   DL_TimerG_enableClock(TIMG14);
   DL_TimerG_startCounter(TIMG14);
 }
 
 void led_set_rgb(uint8_t r, uint8_t g, uint8_t b) {
-  set_red(r);
-  set_green(g);
-  set_blue(b);
+  led_set_red(r);
+  led_set_green(g);
+  led_set_blue(b);
 }
 
 // Set channels as output compare, no zero, load, advance, or capture conditions (used with input capture)

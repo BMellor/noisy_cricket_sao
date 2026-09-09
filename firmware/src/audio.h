@@ -6,3 +6,5 @@
 void audio_init(void);
 
 void audio_enable(bool enable);
+
+void chirp(void);

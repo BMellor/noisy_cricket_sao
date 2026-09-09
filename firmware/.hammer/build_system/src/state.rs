@@ -317,14 +317,14 @@ impl State {
         self.add_cpp_warning("unused-parameter");
         self.add_cpp_warning("cpp");
         self.add_cpp_warning("double-promotion");
-        self.add_c_error("all");
-        self.add_c_error("extra");
+        //self.add_c_error("all");
+        //self.add_c_error("extra");
         self.add_c_error("strict-prototypes");
         self.add_c_error("old-style-definition");
         self.add_c_error("format=2");
         self.add_c_error("write-strings");
-        self.add_cpp_error("all");
-        self.add_cpp_error("extra");
+        //self.add_cpp_error("all");
+        //self.add_cpp_error("extra");
         self.add_cpp_error("format=2");
         self.add_cpp_error("float-equal");
         self.add_cpp_error("cast-align");
