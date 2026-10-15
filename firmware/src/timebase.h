@@ -2,6 +2,12 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <ti/devices/msp/msp.h>
+
+// TIMG8 counts up at 24 MHz / 8 and wraps every 1 ms; usable as a fine-grained cycle timer
+#define TIMEBASE_TICKS_PER_MS 3000
+#define TIMEBASE_CYCLES_PER_TICK 8
+static inline uint32_t timebase_ticks(void) { return TIMG8->COUNTERREGS.CTR; }
 
 uint32_t get_timestamp_ms(void);
 

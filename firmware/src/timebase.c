@@ -36,7 +36,7 @@ void timebase_init(void) {
   };
 
   DL_TimerG_TimerConfig gTickTIMTimerConfig = {
-      .period = 3000U,
+      .period = TIMEBASE_TICKS_PER_MS,
       .timerMode = DL_TIMER_TIMER_MODE_PERIODIC_UP,
       .startTimer = DL_TIMER_START,
   };
@@ -47,6 +47,7 @@ void timebase_init(void) {
   DL_TimerG_initTimerMode(TIMG8, (DL_TimerG_TimerConfig *)&gTickTIMTimerConfig);
 
   DL_TimerG_enableInterrupt(TIMG8, DL_TIMERG_INTERRUPT_ZERO_EVENT);
+  NVIC_SetPriority(TIMG8_INT_IRQn, 1);
   NVIC_EnableIRQ(TIMG8_INT_IRQn);
 
   DL_TimerG_enableClock(TIMG8);

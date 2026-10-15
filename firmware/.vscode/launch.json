@@ -5,54 +5,62 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Cortex Debug FreeRTOS",
-            "cwd": "${workspaceRoot}",
-            "executable": "./target/build/stm32h7_speaker_client.elf",
+            // Requires the "probe-rs Debugger" extension (probe-rs.probe-rs-debugger). Run "cargo run" in firmware/ first.
+            "name": "probe-rs - Flash & Debug",
+            "type": "probe-rs-debug",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/firmware",
+            "chip": "MSPM0C1104",
+            "speed": 1000,
+            // NRST is disabled by the firmware (PA1 is I2C SCL), so reset goes over SWD
+            "connectUnderReset": false,
+            "flashingConfig": {
+                "flashingEnabled": true,
+                "haltAfterReset": true
+            },
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "${workspaceFolder}/firmware/target/build/mspm0.elf",
+                    "svdFile": "${workspaceFolder}/firmware/svd/MSPM0C110X.svd"
+                }
+            ]
+        },
+        {
+            "name": "probe-rs - Attach",
+            "type": "probe-rs-debug",
+            "request": "attach",
+            "cwd": "${workspaceFolder}/firmware",
+            "chip": "MSPM0C1104",
+            "speed": 1000,
+            "coreConfigs": [
+                {
+                    "coreIndex": 0,
+                    "programBinary": "${workspaceFolder}/firmware/target/build/mspm0.elf",
+                    "svdFile": "${workspaceFolder}/firmware/svd/MSPM0C110X.svd"
+                }
+            ]
+        },
+        {
+            // Needs an OpenOCD build with MSPM0 support (upstream after 0.12.0)
+            "name": "CMSIS-DAP - No SRST",
+            "cwd": "${workspaceRoot}/firmware",
+            "executable": "${workspaceRoot}/firmware/target/build/mspm0.elf",
             "request": "launch",
             "type": "cortex-debug",
-            "servertype": "stlink",
-            "rtos": "FreeRTOS",
-            "device": "STM32H730VB",
-            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
-            "interface": "swd",
-            "preLaunchTask": "build",
             "runToEntryPoint": "main",
-        },
-        {
-            "name": "Cortex Attach FreeRTOS",
-            "cwd": "${workspaceRoot}",
-            "executable": "./target/build/stm32h7_speaker_client.elf",
-            "request": "attach",
-            "type": "cortex-debug",
-            "servertype": "stlink",
-            "rtos": "FreeRTOS",
-            "device": "STM32H730VB",
-            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
+            "servertype": "openocd",
             "interface": "swd",
-        },
-        {
-            "name": "Cortex Debug",
-            "cwd": "${workspaceRoot}",
-            "executable": "./target/build/stm32h7_speaker_client.elf",
-            "request": "launch",
-            "type": "cortex-debug",
-            "servertype": "stlink",
-            "device": "STM32H730VB",
-            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
-            "interface": "swd",
-            "preLaunchTask": "build",
-            "runToEntryPoint": "main",
-        },
-        {
-            "name": "Cortex Attach",
-            "cwd": "${workspaceRoot}",
-            "executable": "./target/build/stm32h7_speaker_client.elf",
-            "request": "attach",
-            "type": "cortex-debug",
-            "servertype": "stlink",
-            "device": "STM32H730VB",
-            "svdFile": ".hammer/stm32h7/SVD/STM32H73x.svd",
-            "interface": "swd",
+            "svdFile": "${workspaceRoot}/firmware/svd/MSPM0C110X.svd",
+            "configFiles": [
+                "interface/cmsis-dap.cfg",
+                "target/ti_mspm0.cfg"
+            ],
+            "openOCDPreConfigLaunchCommands": [
+                "adapter speed 1000",
+                "reset_config none separate"
+            ],
+            "showDevDebugOutput": "none"
         }
     ]
 }

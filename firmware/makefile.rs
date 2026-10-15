@@ -12,10 +12,11 @@ fn main() {
     // C11 and C++17 are now the default
     state.set_default_warnings();
     workarounds::gcc_12_2_linker_rwx_warning(&mut state);
-    workarounds::newlib_nosys_stub_warnings(&mut state);
 
     state.add_linker_opt("--specs=nano.specs");
     state.add_linker_opt("--specs=nosys.specs");
+    state.add_linker_opt("-nostartfiles");
+    state.add_linker_opt("-Wl,--entry=Reset_Handler");
 
     mspm0::add(&mut state, mspm0::Device::MSPM0C1104);
 

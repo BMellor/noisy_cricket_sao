@@ -200,7 +200,6 @@ pub fn add(state: &mut State, device: Device) {
     );
     // driverlib/m0p
     add_c_file!(state, "ti/driverlib/m0p/dl_factoryregion.c");
-    add_c_file!(state, "ti/driverlib/m0p/dl_interrupt.c");
     // driverlib
     add_c_file!(state, "ti/driverlib/dl_adc12.c");
     add_c_file!(state, "ti/driverlib/dl_gpio.c");

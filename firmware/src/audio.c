@@ -1,163 +1,111 @@
 #include "audio.h"
-#include "led.h"
+#include "chirp_lut.h"
+#include "config.h"
 #include "pins.h"
 #include <ti/devices/msp/msp.h>
 #include <ti/driverlib/dl_gpio.h>
 #include <ti/driverlib/dl_timera.h>
 
-volatile bool chirp_active = false;
+#define PWM_MID 128
+#define REP_GAP_SAMPLES ((uint16_t)(CHIRP_REP_GAP_MS * SAMPLE_RATE_HZ / 1000))
+#define REP_SAMPLES (CHIRP_LEN + REP_GAP_SAMPLES)
+#define CHIRP_SAMPLES ((uint32_t)REP_SAMPLES * CHIRP_REPS)
 
-volatile uint16_t lut_idx = 0;
+static volatile uint16_t pos;     // within the current playback + gap
+static volatile uint16_t elapsed; // within the whole chirp
+static volatile uint8_t reps_left;
+static volatile uint8_t volume = DEFAULT_VOLUME;
+static volatile uint16_t gain = DEFAULT_VOLUME + (DEFAULT_VOLUME >> 7); // Q8
 
-static const uint8_t chirp_lut[1479] = {
-    127, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 127, 118,
-    118, 118, 118, 118, 127, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118,
-    118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118,
-    118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118,
-    118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118,
-    127, 127, 135, 135, 127, 118, 118, 109, 109, 118, 118, 127, 127, 135, 135, 127, 127, 118, 109, 109, 109, 118, 127,
-    127, 135, 135, 127, 127, 118, 109, 109, 109, 118, 127, 135, 135, 135, 135, 127, 118, 109, 109, 109, 118, 127, 127,
-    135, 135, 135, 127, 118, 109, 109, 109, 109, 118, 127, 135, 144, 135, 127, 118, 109, 100, 100, 109, 118, 127, 135,
-    144, 144, 135, 118, 109, 100, 100, 109, 118, 127, 135, 144, 144, 135, 127, 109, 100, 100, 100, 109, 127, 135, 144,
-    144, 135, 127, 109, 100, 100, 100, 109, 127, 135, 144, 144, 144, 127, 118, 100, 100, 100, 109, 118, 135, 144, 153,
-    144, 135, 118, 100, 91,  91,  100, 118, 135, 144, 153, 153, 135, 118, 109, 91,  91,  100, 109, 127, 144, 153, 153,
-    144, 127, 109, 91,  91,  91,  109, 127, 144, 153, 153, 144, 127, 109, 91,  91,  91,  100, 118, 144, 153, 153, 153,
-    135, 118, 100, 91,  91,  100, 118, 135, 153, 162, 153, 135, 118, 100, 91,  82,  91,  109, 135, 153, 162, 162, 144,
-    127, 100, 91,  82,  91,  109, 127, 153, 162, 162, 153, 127, 109, 91,  82,  82,  100, 127, 144, 162, 162, 153, 135,
-    109, 91,  82,  82,  91,  118, 144, 162, 171, 162, 144, 118, 91,  82,  73,  91,  109, 135, 162, 171, 162, 144, 118,
-    100, 82,  73,  82,  109, 135, 153, 171, 171, 153, 127, 100, 82,  73,  82,  100, 127, 153, 171, 171, 162, 135, 109,
-    82,  64,  73,  91,  118, 153, 171, 180, 171, 144, 109, 82,  64,  64,  82,  109, 144, 171, 180, 171, 153, 118, 91,
-    64,  64,  73,  109, 135, 171, 180, 180, 162, 127, 91,  64,  64,  73,  100, 135, 162, 180, 180, 162, 135, 100, 73,
-    55,  64,  91,  127, 162, 180, 189, 171, 144, 109, 73,  55,  55,  82,  118, 153, 180, 189, 180, 153, 118, 82,  55,
-    55,  73,  109, 144, 180, 189, 189, 162, 127, 82,  55,  46,  64,  100, 135, 171, 198, 189, 171, 127, 91,  55,  46,
-    55,  91,  127, 171, 198, 198, 180, 135, 100, 64,  46,  55,  82,  118, 162, 189, 198, 180, 144, 109, 64,  46,  46,
-    73,  109, 153, 189, 207, 189, 153, 118, 73,  46,  46,  64,  100, 144, 189, 207, 198, 162, 127, 82,  46,  37,  55,
-    91,  144, 180, 207, 198, 171, 135, 82,  46,  37,  46,  82,  135, 180, 207, 207, 180, 144, 91,  55,  37,  46,  73,
-    127, 171, 198, 207, 189, 153, 100, 55,  37,  37,  64,  118, 162, 198, 216, 198, 162, 109, 64,  37,  37,  55,  100,
-    153, 198, 216, 207, 171, 118, 73,  37,  28,  55,  91,  144, 189, 216, 207, 180, 127, 82,  37,  28,  46,  82,  135,
-    180, 216, 216, 189, 144, 91,  46,  28,  37,  73,  127, 171, 207, 216, 198, 153, 100, 55,  28,  28,  64,  118, 171,
-    207, 216, 198, 162, 109, 55,  28,  28,  55,  109, 162, 198, 216, 207, 171, 118, 64,  28,  28,  46,  91,  153, 198,
-    216, 216, 180, 127, 73,  37,  19,  37,  82,  135, 189, 216, 216, 189, 135, 82,  37,  19,  37,  73,  127, 180, 216,
-    225, 198, 153, 91,  46,  19,  28,  64,  118, 171, 216, 225, 207, 162, 100, 55,  19,  19,  55,  109, 162, 207, 225,
-    216, 171, 118, 64,  28,  19,  46,  91,  153, 198, 225, 216, 180, 127, 73,  28,  19,  37,  82,  135, 189, 225, 225,
-    198, 144, 82,  37,  19,  28,  73,  127, 180, 225, 225, 207, 153, 91,  46,  19,  19,  55,  118, 171, 216, 234, 216,
-    162, 109, 55,  19,  19,  46,  100, 162, 207, 234, 216, 180, 118, 64,  19,  10,  37,  91,  144, 198, 234, 225, 189,
-    135, 73,  28,  10,  28,  73,  135, 189, 225, 234, 198, 144, 91,  37,  10,  19,  64,  118, 180, 225, 234, 216, 162,
-    100, 46,  10,  19,  46,  100, 162, 216, 234, 225, 180, 118, 55,  19,  10,  37,  91,  153, 207, 234, 225, 189, 135,
-    73,  28,  10,  28,  73,  135, 189, 225, 234, 198, 144, 82,  37,  10,  19,  64,  118, 180, 225, 234, 216, 162, 100,
-    46,  10,  10,  46,  100, 162, 216, 234, 225, 180, 118, 55,  19,  10,  37,  91,  153, 207, 234, 225, 189, 135, 73,
-    28,  10,  28,  73,  135, 189, 225, 234, 207, 153, 91,  37,  10,  19,  55,  118, 171, 216, 234, 216, 171, 109, 46,
-    19,  10,  46,  100, 162, 207, 234, 225, 180, 127, 64,  19,  10,  28,  82,  144, 198, 225, 225, 198, 144, 82,  37,
-    10,  19,  64,  127, 180, 225, 234, 207, 162, 100, 46,  19,  19,  46,  100, 162, 207, 234, 216, 180, 118, 64,  19,
-    10,  37,  82,  144, 198, 225, 225, 189, 135, 82,  37,  10,  28,  64,  127, 180, 216, 225, 207, 153, 100, 46,  19,
-    19,  55,  109, 162, 207, 225, 216, 171, 118, 64,  28,  19,  37,  91,  144, 189, 225, 225, 189, 135, 82,  37,  19,
-    28,  73,  127, 180, 216, 225, 207, 162, 100, 55,  28,  28,  55,  100, 153, 198, 225, 216, 180, 127, 73,  37,  19,
-    37,  82,  135, 180, 216, 216, 189, 144, 91,  46,  28,  28,  64,  118, 162, 207, 216, 207, 162, 118, 64,  37,  28,
-    46,  91,  144, 189, 216, 207, 180, 135, 82,  46,  28,  37,  73,  127, 171, 207, 216, 198, 153, 109, 64,  37,  37,
-    55,  100, 153, 189, 207, 207, 171, 127, 82,  46,  37,  46,  82,  127, 171, 198, 207, 189, 153, 109, 64,  37,  46,
-    64,  109, 153, 189, 207, 198, 171, 127, 82,  55,  37,  55,  91,  127, 171, 198, 198, 180, 144, 109, 64,  46,  46,
-    73,  109, 153, 180, 198, 189, 162, 127, 91,  55,  46,  55,  91,  127, 162, 189, 198, 180, 144, 109, 73,  55,  55,
-    73,  109, 144, 180, 189, 189, 162, 127, 91,  64,  55,  64,  91,  127, 162, 180, 189, 171, 144, 109, 82,  64,  55,
-    73,  109, 135, 171, 180, 180, 162, 135, 100, 73,  64,  64,  91,  118, 153, 171, 180, 171, 153, 118, 91,  73,  64,
-    73,  100, 127, 162, 180, 180, 162, 135, 109, 82,  64,  73,  82,  109, 135, 162, 180, 171, 153, 127, 100, 82,  73,
-    73,  91,  118, 144, 162, 171, 162, 144, 118, 91,  73,  73,  82,  100, 127, 153, 171, 171, 162, 135, 109, 91,  73,
-    73,  91,  109, 135, 153, 171, 162, 153, 127, 109, 91,  82,  82,  91,  118, 135, 153, 162, 162, 144, 127, 100, 82,
-    82,  82,  100, 118, 144, 162, 162, 153, 144, 118, 100, 82,  82,  91,  109, 127, 144, 162, 162, 153, 135, 118, 100,
-    82,  82,  91,  109, 127, 144, 162, 162, 153, 135, 109, 100, 91,  91,  100, 118, 135, 144, 153, 153, 144, 127, 109,
-    100, 91,  91,  100, 118, 135, 144, 153, 153, 144, 127, 109, 100, 91,  91,  100, 118, 135, 144, 153, 153, 135, 127,
-    109, 100, 91,  91,  109, 118, 135, 144, 153, 144, 135, 127, 109, 100, 91,  100, 109, 118, 135, 144, 153, 144, 135,
-    127, 109, 100, 91,  100, 109, 118, 135, 144, 144, 144, 135, 127, 109, 100, 100, 100, 109, 118, 135, 144, 144, 144,
-    135, 127, 109, 100, 100, 100, 109, 118, 135, 144, 144, 144, 135, 127, 109, 100, 100, 100, 109, 118, 135, 144, 144,
-    144, 135, 127, 109, 100, 100, 100, 109, 118, 135, 144, 144, 144, 135, 127, 109, 109, 100, 109, 109, 118, 135, 135,
-    144, 135, 135, 127, 109, 109, 100, 109, 109, 118, 135, 135, 144, 135, 135, 127, 118, 109, 109, 109, 118, 118, 127,
-    135, 135, 135, 127, 118, 118, 109, 109, 109, 118, 127, 127, 135, 135, 135, 127, 118, 118, 109, 109, 109, 118, 127,
-    127, 135, 135, 135, 127, 118, 118, 109, 109, 109, 118, 127, 127, 135, 135, 135, 127, 118, 118, 109, 109, 118, 118,
-    127, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118,
-    118, 127, 127, 127, 127, 127, 127, 118, 118, 118, 118, 118, 118, 127, 127, 127, 127, 127, 127, 118, 118, 118, 118,
-    118, 127, 127, 127, 127, 127, 127};
+static inline void set_pwm(uint8_t v) { TIMA0->COUNTERREGS.CC_01[0] = v; }
 
-const uint8_t sine_lut64[64] = {125, 132, 140, 147, 154, 160, 167, 173, 178, 183, 187, 191, 194, 197, 199, 200,
-                                200, 199, 197, 194, 191, 187, 183, 178, 173, 167, 160, 154, 147, 140, 132, 125,
-                                125, 118, 110, 103, 96,  90,  83,  77,  72,  67,  63,  59,  56,  53,  51,  50,
-                                50,  50,  51,  53,  56,  59,  63,  67,  72,  77,  83,  90,  96,  103, 110, 118};
-
-void audio_enable(bool enable) {
-  // Amp shutdown pin is active high, pull low to enable amplifier
-  if (enable) {
-    DL_TimerA_startCounter(TIMA0);
-    DL_TimerA_setCaptureCompareValue(TIMA0, 127, DL_TIMER_CC_0_INDEX); // mid-scale
-    DL_GPIO_clearPins(AMP_SD.port, AMP_SD.pinmask);
-  } else {
-    DL_GPIO_setPins(AMP_SD.port, AMP_SD.pinmask);
-    DL_TimerA_stopCounter(TIMA0);
-  }
-}
+static inline uint8_t scaled(uint8_t v) { return (uint8_t)(PWM_MID + ((((int32_t)v - PWM_MID) * gain) >> 8)); }
 
 void audio_init(void) {
-
-  // Power up & reset the timer
   DL_TimerA_reset(TIMA0);
   DL_TimerA_enablePower(TIMA0);
 
-  // Disable amplifier
+  // Amp shutdown is active high
   DL_GPIO_initDigitalOutput(AMP_SD.iomux);
   DL_GPIO_enableOutput(AMP_SD.port, AMP_SD.pinmask);
   DL_GPIO_setPins(AMP_SD.port, AMP_SD.pinmask);
 
-  // Initialize GPIO to alternate function
   DL_GPIO_initPeripheralOutputFunction(AUDIO.iomux, IOMUX_PINCM29_PF_TIMA0_CCP0);
 
-  // Setup TIMA0 for ~93kHz 8-bit PWM
-  // Timer clock configuration to be sourced by BUSCLK (24000000 Hz)
-  // timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
-  DL_TimerA_ClockConfig gClockConfig = {
+  // 24 MHz / 256 = 93.75 kHz carrier, one PWM period per SPI word. The sample is updated from the mic ISR
+  // every 4 periods; the zero-event shadow load keeps ISR jitter off the output edge.
+  DL_TimerA_ClockConfig clkCfg = {
       .clockSel = DL_TIMER_CLOCK_BUSCLK,
       .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
       .prescale = 0U,
   };
-  DL_TimerA_setClockConfig(TIMA0, (DL_TimerA_ClockConfig *)&gClockConfig);
+  DL_TimerA_setClockConfig(TIMA0, &clkCfg);
 
-  // Setup capture/compare channels for PWM
-  DL_TimerA_PWMConfig pwmConfig = {
+  DL_TimerA_PWMConfig pwmCfg = {
       .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN,
       .period = 255,
-      .isTimerWithFourCC = true, // TIMA0 has 4 CC channels, we're only using one though.
+      .isTimerWithFourCC = true,
       .startTimer = DL_TIMER_STOP,
   };
-  DL_TimerA_initPWMMode(TIMA0, &pwmConfig);
+  DL_TimerA_initPWMMode(TIMA0, &pwmCfg);
 
-  // CC0 = Audio
   DL_TimerA_setCCPDirection(TIMA0, DL_TIMER_CC0_OUTPUT);
-  DL_TimerA_setCaptureCompareValue(TIMA0, 127, DL_TIMER_CC_0_INDEX); // mid-scale
+  DL_TimerA_setCaptureCompareValue(TIMA0, PWM_MID, DL_TIMER_CC_0_INDEX);
   DL_TimerA_setCaptCompUpdateMethod(TIMA0, DL_TIMER_CC_UPDATE_METHOD_ZERO_EVT, DL_TIMER_CC_0_INDEX);
-
-  // Setup audio advance with period repeat counter
-  // Update rate of ~46.9kHz
-  DL_TimerA_setCounterRepeatMode(TIMA0, DL_TIMER_REPEAT_MODE_ENABLED);
-  DL_TimerA_setRepeatCounter(TIMA0, 1);
-
-  DL_TimerA_enableInterrupt(TIMA0, DL_TIMERA_INTERRUPT_REPC_EVENT);
-  NVIC_EnableIRQ(TIMA0_INT_IRQn);
 
   DL_TimerA_enableClock(TIMA0);
   DL_TimerA_enableShadowFeatures(TIMA0);
-  // DL_TimerA_startCounter(TIMA0);
 }
 
-void TIMA0_IRQHandler(void) {
-  DL_TIMER_IIDX trigger = DL_TimerA_getPendingInterrupt(TIMA0);
-  DL_TimerA_clearInterruptStatus(TIMA0, trigger);
-  NVIC_ClearPendingIRQ(TIMA0_INT_IRQn);
-  if (chirp_active) {
-    DL_TimerA_setCaptureCompareValue(TIMA0, (chirp_lut[lut_idx++]), DL_TIMER_CC_0_INDEX);
-    if (lut_idx >= 1479)
-      chirp_active = false;
-    led_set_green(255);
+void audio_pwm_enable(bool enable) {
+  if (enable) {
+    set_pwm(PWM_MID);
+    DL_TimerA_startCounter(TIMA0);
   } else {
-    DL_TimerA_setCaptureCompareValue(TIMA0, 127, DL_TIMER_CC_0_INDEX);
-    lut_idx = 0;
-    led_set_green(0);
+    DL_TimerA_stopCounter(TIMA0);
   }
 }
 
-void chirp(void) { chirp_active = true; }
+void audio_amp_enable(bool enable) {
+  if (enable)
+    DL_GPIO_clearPins(AMP_SD.port, AMP_SD.pinmask);
+  else
+    DL_GPIO_setPins(AMP_SD.port, AMP_SD.pinmask);
+}
+
+void audio_play_chirp(void) {
+  pos = 0;
+  elapsed = 0;
+  reps_left = CHIRP_REPS; // written last: arms the ISR
+}
+
+bool audio_busy(void) { return reps_left != 0; }
+
+void audio_set_volume(uint8_t v) {
+  volume = v;
+  gain = (uint16_t)(v + (v >> 7));
+}
+
+uint8_t audio_volume(void) { return volume; }
+
+uint8_t audio_progress(void) {
+  if (!reps_left)
+    return 255;
+  return (uint8_t)((uint32_t)elapsed * 255 / CHIRP_SAMPLES);
+}
+
+void audio_tick(void) {
+  if (!reps_left)
+    return;
+  uint16_t p = pos;
+  if (p < CHIRP_LEN)
+    set_pwm(scaled(chirp_lut[p]));
+  else if (p == CHIRP_LEN)
+    set_pwm(PWM_MID);
+  if (++p >= REP_SAMPLES) {
+    p = 0;
+    reps_left--;
+  }
+  pos = p;
+  elapsed++;
+}
