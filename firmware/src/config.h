@@ -1,6 +1,6 @@
 #pragma once
 
-// Audio/mic sample rate: 1.5 MHz PDM / 16 bits per SPI word / 4 words per sample
+// Audio/mic sample rate: 3 MHz PDM / 16 bits per SPI word / 8 words per sample
 #define SAMPLE_RATE_HZ 23437.5f
 
 // Chirp = CHIRP_REPS playbacks of the LUT with CHIRP_REP_GAP_MS of silence after each

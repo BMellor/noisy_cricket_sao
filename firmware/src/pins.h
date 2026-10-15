@@ -19,5 +19,5 @@ static const gpio_pin_t PDM_DATA = {GPIOA, (1 << 22), IOMUX_PINCM23}; // PA22 (S
 static const gpio_pin_t LED_R = {GPIOA, (1 << 23), IOMUX_PINCM24};    // PA23 (TIMG14_C0[4])
 static const gpio_pin_t LED_G = {GPIOA, (1 << 24), IOMUX_PINCM25};    // PA24 (TIMG14_C1[3])
 static const gpio_pin_t LED_B = {GPIOA, (1 << 25), IOMUX_PINCM26};    // PA25 (TIMG14_C3[2])
-static const gpio_pin_t AMP_SD = {GPIOA, (1 << 26), IOMUX_PINCM27};   // PA27
+static const gpio_pin_t AMP_SD = {GPIOA, (1 << 26), IOMUX_PINCM27};   // PA26
 static const gpio_pin_t AUDIO = {GPIOA, (1 << 28), IOMUX_PINCM29};    // PA28 (TIMA0_C0[2])
