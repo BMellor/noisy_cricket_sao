@@ -77,11 +77,6 @@ int main(void) {
 
     if (i2c_target_host_wrote())
       handle_host_write();
-    if (i2c_target_beep_requested()) {
-      uint8_t b[4];
-      i2c_target_get(REG_BEEP_FREQ, b, sizeof b);
-      cricket_beep((uint16_t)(b[0] | (b[1] << 8)), (uint16_t)(b[2] | (b[3] << 8)));
-    }
 
     uint32_t now = get_timestamp_ms();
     if (fft_pending && mic_capture_done()) {

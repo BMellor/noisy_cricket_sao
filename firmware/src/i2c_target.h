@@ -16,9 +16,7 @@
 #define REG_ISR_LOAD 0x0D   // RO u8, % of CPU in the mic ISR over the last second
 #define REG_STALLS 0x0E     // RO u8, PDM clock stalls (TX FIFO ran dry) in the last second, saturating
 #define REG_FFT 0x10        // RO, 32 bins, 8 * log2(power) (0.376 dB/LSB), 0 .. 11.35 kHz in 366 Hz steps
-#define REG_BEEP_FREQ 0x30  // RW u16, beep frequency in Hz (clamped to BEEP_MIN_HZ..BEEP_MAX_HZ)
-#define REG_BEEP_DUR 0x32   // RW u16, beep duration in ms; writing it starts the beep
-#define REG_COUNT 0x34
+#define REG_COUNT 0x30
 
 #define REG_ID_VALUE 0xC7
 #define COMMIT_KEY 0xA5
@@ -35,6 +33,3 @@ void i2c_target_get(uint8_t reg, uint8_t *dst, uint8_t len);
 
 // True once after each host write transaction (at its STOP)
 bool i2c_target_host_wrote(void);
-
-// True once after a host write transaction that wrote REG_BEEP_DUR
-bool i2c_target_beep_requested(void);

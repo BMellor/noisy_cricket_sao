@@ -9,8 +9,6 @@ void cricket_poll(void);
 
 void cricket_set_threshold(uint16_t threshold);
 
-// Queue a beep (ignored if freq or duration is 0; freq clamped to BEEP_MIN_HZ..BEEP_MAX_HZ); overrides any chirping
-void cricket_beep(uint16_t freq_hz, uint16_t duration_ms);
 uint16_t cricket_threshold(void);
 
 // Idle LED colour; chirps fade green on top of it

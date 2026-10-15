@@ -90,7 +90,7 @@ static void process_sample(uint32_t v, uint32_t w) {
     s.cap_idx = i + 1;
   }
 
-  // While blanked (chirp/beep playing) the level is frozen, so skip the low-pass too (~1/3 of the ISR).
+  // While blanked (chirp playing) the level is frozen, so skip the low-pass too (~1/3 of the ISR).
   // It resumes from its pre-blank state; in a quiet room that mismatch is tiny.
   if (s.blanked)
     return;
@@ -173,7 +173,11 @@ void mic_init(void) {
 
   DL_SPI_Config spiCfg = {
       .mode = DL_SPI_MODE_CONTROLLER,
-      .frameFormat = DL_SPI_FRAME_FORMAT_MOTO3_POL0_PHA0, // L/R = GND: mic drives on falling edge, sample on rising
+      // PHA1: frames run back to back (128 cycles/word). PHA0 inserts a ~14-cycle gap after every frame, which
+      // made the audio rate ~21.1 kHz (chirps flat, sample updates beating against the PWM). With L/R = GND the
+      // mic drives on the falling edge and floats after the rising edge, so PHA1 samples the held line;
+      // measured noise floor is the same as PHA0.
+      .frameFormat = DL_SPI_FRAME_FORMAT_MOTO3_POL0_PHA1,
       .parity = DL_SPI_PARITY_NONE,
       .dataSize = DL_SPI_DATA_SIZE_16,
       .bitOrder = DL_SPI_BIT_ORDER_MSB_FIRST,

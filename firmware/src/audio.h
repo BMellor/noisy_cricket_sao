@@ -13,9 +13,6 @@ void audio_amp_enable(bool enable);
 void audio_play_chirp(void);
 bool audio_busy(void);
 
-// Play a beep from tone_lut.h at the current volume, with a short attack/release; replaces any chirp.
-void audio_play_tone(uint16_t freq_hz, uint16_t duration_ms);
-
 // 0..255, see DEFAULT_VOLUME
 void audio_set_volume(uint8_t volume);
 uint8_t audio_volume(void);

@@ -37,11 +37,6 @@
 // Loud again once level exceeds threshold + threshold/HYSTERESIS_DIV
 #define HYSTERESIS_DIV 4
 
-// Beep frequency range; requests outside it are clamped. Below ~1.5 kHz the tiny speaker mostly reproduces the
-// harmonics (harsh); above ~3.9 kHz the waveform's 3rd harmonic aliases past Nyquist (out-of-tune).
-#define BEEP_MIN_HZ 1500
-#define BEEP_MAX_HZ 4000
-
 #define FFT_INTERVAL_MS 50
 #define REG_UPDATE_MS 10
 
