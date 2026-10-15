@@ -8,7 +8,7 @@
 
 void mic_init(void);
 
-// While blanked the level averagers are frozen; the filters and FFT capture keep running.
+// While blanked the level low-pass and averagers are skipped (levels frozen); the FFT capture keeps running.
 void mic_set_blanking(bool blank);
 
 uint16_t mic_level_fast(void); // ~44 ms time constant

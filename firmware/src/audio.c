@@ -2,6 +2,7 @@
 #include "chirp_lut.h"
 #include "config.h"
 #include "pins.h"
+#include "tone_lut.h"
 #include <ti/devices/msp/msp.h>
 #include <ti/driverlib/dl_gpio.h>
 #include <ti/driverlib/dl_timera.h>
@@ -10,10 +11,15 @@
 #define REP_GAP_SAMPLES ((uint16_t)(CHIRP_REP_GAP_MS * SAMPLE_RATE_HZ / 1000))
 #define REP_SAMPLES (CHIRP_LEN + REP_GAP_SAMPLES)
 #define CHIRP_SAMPLES ((uint32_t)REP_SAMPLES * CHIRP_REPS)
+#define TONE_INC_PER_HZ 183252u // round(2^32 / 23437.5): phase step for 1 Hz
+#define TONE_ENV_STEP 2         // Q8 envelope step per sample: 128-sample (5.5 ms) attack and release
 
 static volatile uint16_t pos;     // within the current playback + gap
 static volatile uint16_t elapsed; // within the whole chirp
 static volatile uint8_t reps_left;
+static volatile uint32_t tone_left; // samples remaining; non-zero while a tone plays
+static uint32_t tone_phase, tone_inc;
+static uint16_t tone_env; // Q8, 0..256
 static volatile uint8_t volume = DEFAULT_VOLUME;
 static volatile uint16_t gain = DEFAULT_VOLUME + (DEFAULT_VOLUME >> 7); // Q8
 
@@ -79,7 +85,16 @@ void audio_play_chirp(void) {
   reps_left = CHIRP_REPS; // written last: arms the ISR
 }
 
-bool audio_busy(void) { return reps_left != 0; }
+bool audio_busy(void) { return reps_left != 0 || tone_left != 0; }
+
+void audio_play_tone(uint16_t freq_hz, uint16_t duration_ms) {
+  reps_left = 0; // a tone replaces any chirp in progress
+  tone_left = 0;
+  tone_phase = 0;
+  tone_env = 0;
+  tone_inc = freq_hz * TONE_INC_PER_HZ;
+  tone_left = (uint32_t)duration_ms * 375 / 16; // * 23.4375 samples per ms; written last: arms the ISR
+}
 
 void audio_set_volume(uint8_t v) {
   volume = v;
@@ -94,7 +109,25 @@ uint8_t audio_progress(void) {
   return (uint8_t)((uint32_t)elapsed * 255 / CHIRP_SAMPLES);
 }
 
+static void tone_tick(void) {
+  uint32_t left = tone_left - 1;
+  uint16_t env = tone_env;
+  if (env < 256)
+    env += TONE_ENV_STEP;
+  if (left < 256 / TONE_ENV_STEP && env > left * TONE_ENV_STEP)
+    env = (uint16_t)(left * TONE_ENV_STEP); // release
+  tone_env = env;
+  tone_phase += tone_inc;
+  int32_t v = ((int32_t)tone_lut[tone_phase >> 24] * env) >> 8;
+  set_pwm((uint8_t)(PWM_MID + ((v * gain) >> 8)));
+  tone_left = left;
+}
+
 void audio_tick(void) {
+  if (tone_left) {
+    tone_tick();
+    return;
+  }
   if (!reps_left)
     return;
   uint16_t p = pos;

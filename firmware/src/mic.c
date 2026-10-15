@@ -90,6 +90,11 @@ static void process_sample(uint32_t v, uint32_t w) {
     s.cap_idx = i + 1;
   }
 
+  // While blanked (chirp/beep playing) the level is frozen, so skip the low-pass too (~1/3 of the ISR).
+  // It resumes from its pre-blank state; in a quiet room that mismatch is tiny.
+  if (s.blanked)
+    return;
+
   // Section 2's input history is section 1's output history (m1, m2), so read both before shifting
   int32_t u = sat(y, LEVEL_SAT);
   int32_t m = sat((LP1_B0 * (u + 2 * s.x1 + s.x2) - LP1_A1 * s.m1 - LP1_A2 * s.m2) >> 14, LEVEL_SAT);
@@ -100,9 +105,6 @@ static void process_sample(uint32_t v, uint32_t w) {
   s.m1 = m;
   s.y2 = s.y1;
   s.y1 = z;
-
-  if (s.blanked)
-    return;
 
   uint32_t a = (uint32_t)(z < 0 ? -z : z);
   uint32_t f = s.fast;

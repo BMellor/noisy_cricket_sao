@@ -9,11 +9,12 @@ static uint8_t regs[REG_COUNT];
 static uint8_t ptr;
 static bool have_ptr;
 static bool got_data;
-static volatile bool host_wrote;
+static bool got_beep;
+static volatile bool host_wrote, beep_requested;
 
 static bool writable(uint8_t r) {
   return r == REG_THRESHOLD || r == REG_THRESHOLD + 1 || r == REG_COMMIT || r == REG_VOLUME ||
-         (r >= REG_LED && r < REG_LED + 3);
+         (r >= REG_LED && r < REG_LED + 3) || (r >= REG_BEEP_FREQ && r < REG_BEEP_DUR + 2);
 }
 
 // Lowest priority. One byte is loaded per TX request (TX FIFO empty while the host is clock-stretched),
@@ -34,6 +35,8 @@ void I2C0_IRQHandler(void) {
         if (ptr < REG_COUNT && writable(ptr)) {
           regs[ptr] = b;
           got_data = true;
+          if (ptr == REG_BEEP_DUR || ptr == REG_BEEP_DUR + 1)
+            got_beep = true;
         }
         ptr++;
       }
@@ -47,6 +50,10 @@ void I2C0_IRQHandler(void) {
     if (got_data) {
       got_data = false;
       host_wrote = true;
+    }
+    if (got_beep) {
+      got_beep = false;
+      beep_requested = true;
     }
     DL_I2C_flushTargetTXFIFO(I2C0);
     break;
@@ -107,6 +114,13 @@ void i2c_target_get(uint8_t reg, uint8_t *dst, uint8_t len) {
   for (uint8_t i = 0; i < len; i++)
     dst[i] = regs[reg + i];
   NVIC_EnableIRQ(I2C0_INT_IRQn);
+}
+
+bool i2c_target_beep_requested(void) {
+  if (!beep_requested)
+    return false;
+  beep_requested = false;
+  return true;
 }
 
 bool i2c_target_host_wrote(void) {
