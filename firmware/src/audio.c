@@ -14,7 +14,6 @@
 static volatile uint16_t pos;     // within the current playback + gap
 static volatile uint16_t elapsed; // within the whole chirp
 static volatile uint8_t reps_left;
-static volatile uint8_t volume = DEFAULT_VOLUME;
 static volatile uint16_t gain = DEFAULT_VOLUME + (DEFAULT_VOLUME >> 7); // Q8
 
 static inline void set_pwm(uint8_t v) { TIMA0->COUNTERREGS.CC_01[0] = v; }
@@ -81,12 +80,7 @@ void audio_play_chirp(void) {
 
 bool audio_busy(void) { return reps_left != 0; }
 
-void audio_set_volume(uint8_t v) {
-  volume = v;
-  gain = (uint16_t)(v + (v >> 7));
-}
-
-uint8_t audio_volume(void) { return volume; }
+void audio_set_volume(uint8_t v) { gain = (uint16_t)(v + (v >> 7)); }
 
 uint8_t audio_progress(void) {
   if (!reps_left)

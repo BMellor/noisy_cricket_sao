@@ -11,10 +11,7 @@ static bool have_ptr;
 static bool got_data;
 static volatile bool host_wrote;
 
-static bool writable(uint8_t r) {
-  return r == REG_THRESHOLD || r == REG_THRESHOLD + 1 || r == REG_COMMIT || r == REG_VOLUME ||
-         (r >= REG_LED && r < REG_LED + 3);
-}
+static bool writable(uint8_t r) { return r >= REG_THRESHOLD && r < REG_LED + 3; }
 
 // Lowest priority. One byte is loaded per TX request (TX FIFO empty while the host is clock-stretched),
 // so nothing is prefetched and the register pointer always matches what the host has read.

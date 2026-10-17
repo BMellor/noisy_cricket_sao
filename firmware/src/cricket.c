@@ -13,7 +13,7 @@ typedef enum { IDLE, ARMED, REST, PWM_WARMUP, AMP_WARMUP, CHIRP, GAP, SETTLE } s
 static state_t state;
 static uint32_t t0, wait_ms;
 static uint8_t chirps_left;
-static uint16_t threshold;
+static uint16_t threshold, preroll_ms, rest_min_ms, rest_max_ms;
 static bool quiet;
 static uint32_t rng = 0x2545F491u;
 static uint8_t led_r, led_g, led_b, fade;
@@ -59,7 +59,11 @@ static void start_group(uint32_t now) {
   enter(PWM_WARMUP, now);
 }
 
-void cricket_init(uint16_t t) { threshold = t; }
+void cricket_set_timing(uint16_t preroll, uint16_t rest_min, uint16_t rest_max) {
+  preroll_ms = preroll;
+  rest_min_ms = rest_min;
+  rest_max_ms = rest_max;
+}
 
 void cricket_poll(void) {
   uint32_t now = get_timestamp_ms();
@@ -76,7 +80,7 @@ void cricket_poll(void) {
     update_quiet();
     if (!quiet) {
       enter(IDLE, now);
-    } else if (dt >= PREROLL_MS) {
+    } else if (dt >= preroll_ms) {
       start_group(now);
     }
     break;
@@ -118,7 +122,7 @@ void cricket_poll(void) {
     if (dt >= SETTLE_MS) {
       // quiet still holds its pre-group value (frozen while blanked); REST re-checks it
       mic_set_blanking(false);
-      wait_ms = rand_range(REST_MIN_MS, REST_MAX_MS);
+      wait_ms = rand_range(rest_min_ms, rest_max_ms);
       enter(REST, now);
     }
     break;
@@ -131,8 +135,6 @@ void cricket_poll(void) {
 }
 
 void cricket_set_threshold(uint16_t t) { threshold = t; }
-
-uint16_t cricket_threshold(void) { return threshold; }
 
 void cricket_set_led(uint8_t r, uint8_t g, uint8_t b) {
   led_r = r;

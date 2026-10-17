@@ -7,7 +7,7 @@
 #include <ti/devices/msp/msp.h>
 
 #define SELFTEST_WHITE_MS 500
-#define SELFTEST_MIC_MS 2000
+#define SELFTEST_MIC_MS 1000
 #define SELFTEST_MIC_UPDATE_MS 20
 
 // 8 * log2(v), 3 fractional bits from the bits below the MSB

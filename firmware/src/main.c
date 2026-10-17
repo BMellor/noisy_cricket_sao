@@ -13,20 +13,53 @@
 #include "settings.h"
 #include "timebase.h"
 
-static void handle_host_write(void) {
-  uint8_t t[2], rgb[3], volume, commit;
-  i2c_target_get(REG_THRESHOLD, t, sizeof t);
-  i2c_target_get(REG_LED, rgb, sizeof rgb);
-  i2c_target_get(REG_VOLUME, &volume, 1);
-  i2c_target_get(REG_COMMIT, &commit, 1);
+// Live configuration: host writes update it, commit saves it
+static settings_t cfg = {.threshold = DEFAULT_THRESHOLD,
+                         .volume = DEFAULT_VOLUME,
+                         .preroll_ms = DEFAULT_PREROLL_MS,
+                         .rest_min_ms = DEFAULT_REST_MIN_MS,
+                         .rest_max_ms = DEFAULT_REST_MAX_MS};
 
-  cricket_set_threshold((uint16_t)(t[0] | (t[1] << 8)));
+static uint16_t get16(uint8_t reg) {
+  uint8_t b[2];
+  i2c_target_get(reg, b, sizeof b);
+  return (uint16_t)(b[0] | (b[1] << 8));
+}
+
+static void set16(uint8_t reg, uint16_t v) {
+  uint8_t b[2] = {(uint8_t)v, (uint8_t)(v >> 8)};
+  i2c_target_set(reg, b, sizeof b);
+}
+
+static void apply_cfg(void) {
+  if (cfg.rest_max_ms < cfg.rest_min_ms)
+    cfg.rest_max_ms = cfg.rest_min_ms;
+  cricket_set_threshold(cfg.threshold);
+  cricket_set_timing(cfg.preroll_ms, cfg.rest_min_ms, cfg.rest_max_ms);
+  audio_set_volume(cfg.volume);
+  set16(REG_THRESHOLD, cfg.threshold);
+  i2c_target_set(REG_VOLUME, &cfg.volume, 1);
+  set16(REG_PREROLL, cfg.preroll_ms);
+  set16(REG_REST_MIN, cfg.rest_min_ms);
+  set16(REG_REST_MAX, cfg.rest_max_ms); // shows the host any correction made above
+}
+
+static void handle_host_write(void) {
+  uint8_t rgb[3], commit;
+  i2c_target_get(REG_LED, rgb, sizeof rgb);
+  i2c_target_get(REG_VOLUME, &cfg.volume, 1);
+  i2c_target_get(REG_COMMIT, &commit, 1);
+  cfg.threshold = get16(REG_THRESHOLD);
+  cfg.preroll_ms = get16(REG_PREROLL);
+  cfg.rest_min_ms = get16(REG_REST_MIN);
+  cfg.rest_max_ms = get16(REG_REST_MAX);
+
+  apply_cfg();
   cricket_set_led(rgb[0], rgb[1], rgb[2]);
-  audio_set_volume(volume);
 
   if (commit) {
     if (commit == COMMIT_KEY)
-      settings_save(&(settings_t){.threshold = cricket_threshold(), .volume = audio_volume()});
+      settings_save(&cfg);
     commit = 0;
     i2c_target_set(REG_COMMIT, &commit, 1);
   }
@@ -57,15 +90,9 @@ int main(void) {
   led_init();
   audio_init();
 
-  settings_t cfg = {.threshold = DEFAULT_THRESHOLD, .volume = DEFAULT_VOLUME};
   settings_load(&cfg);
-  cricket_init(cfg.threshold);
-  audio_set_volume(cfg.volume);
-
   i2c_target_init();
-  uint8_t t[2] = {(uint8_t)cfg.threshold, (uint8_t)(cfg.threshold >> 8)};
-  i2c_target_set(REG_THRESHOLD, t, sizeof t);
-  i2c_target_set(REG_VOLUME, &cfg.volume, 1);
+  apply_cfg();
 
   mic_init();
   selftest_run();

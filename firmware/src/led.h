@@ -5,6 +5,7 @@
 
 void led_init(void);
 
+// Perceptual brightness 0..255 per channel (gamma corrected)
 void led_set_rgb(uint8_t r, uint8_t g, uint8_t b);
 
 void led_set_red(uint8_t value);

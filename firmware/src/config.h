@@ -17,12 +17,13 @@
 #define CHIRP_GAP_MIN_MS 300
 #define CHIRP_GAP_MAX_MS 400
 
-// Fixed delay from the quiet decision to the first chirp (sync anchor between devices)
-#define PREROLL_MS 2000
+// Fixed delay from the quiet decision to the first chirp (sync anchor between devices). Host-tunable over I2C
+// and saved with the threshold, like the rest times below.
+#define DEFAULT_PREROLL_MS 2000
 
 // Still quiet after a group: random rest before the next group (no pre-roll; noise during it restarts from idle)
-#define REST_MIN_MS 1000
-#define REST_MAX_MS 5000
+#define DEFAULT_REST_MIN_MS 1000
+#define DEFAULT_REST_MAX_MS 5000
 
 // PWM running at midscale before the amp is enabled, then amp settling before the first chirp.
 // The AD8107 ramps up over a time set by its BYPASS cap (2.2 uF fitted), several hundred ms.
@@ -33,7 +34,7 @@
 #define SETTLE_MS 100
 
 // Noise threshold in mic level units (0..32767, see mic.h); host-tunable over I2C.
-#define DEFAULT_THRESHOLD 75
+#define DEFAULT_THRESHOLD 60
 // Loud again once level exceeds threshold + threshold/HYSTERESIS_DIV
 #define HYSTERESIS_DIV 4
 

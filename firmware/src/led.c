@@ -4,7 +4,7 @@
 #include <ti/driverlib/dl_gpio.h>
 #include <ti/driverlib/dl_timerg.h>
 
-// gamma = 2.8
+// gamma = 2.8. The LED is active low (on while the counter is above the compare value), so duty = 255 - CC.
 static const uint8_t gamma8[256] = {
     0,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,
@@ -19,13 +19,13 @@ static const uint8_t gamma8[256] = {
     169, 171, 173, 176, 178, 180, 182, 185, 187, 189, 192, 194, 196, 199, 201, 203, 206, 208, 211, 213, 216, 218,
     221, 223, 226, 228, 231, 234, 236, 239, 242, 244, 247, 250, 253, 255};
 
-void led_set_red(uint8_t value) { DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_0_INDEX); }
-
-void led_set_green(uint8_t value) {
-  DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_1_INDEX);
+static void set_duty(uint8_t value, DL_TIMER_CC_INDEX cc) {
+  DL_TimerG_setCaptureCompareValue(TIMG14, 255 - gamma8[value], cc);
 }
 
-void led_set_blue(uint8_t value) { DL_TimerG_setCaptureCompareValue(TIMG14, gamma8[255 - value], DL_TIMER_CC_3_INDEX); }
+void led_set_red(uint8_t value) { set_duty(value, DL_TIMER_CC_0_INDEX); }
+void led_set_green(uint8_t value) { set_duty(value, DL_TIMER_CC_1_INDEX); }
+void led_set_blue(uint8_t value) { set_duty(value, DL_TIMER_CC_3_INDEX); }
 
 void led_init(void) {
   // Power up & reset the timer

@@ -6,6 +6,7 @@
 typedef struct {
   uint16_t threshold;
   uint8_t volume;
+  uint16_t preroll_ms, rest_min_ms, rest_max_ms;
 } settings_t;
 
 // Returns false (leaving *s untouched) if nothing valid has been saved

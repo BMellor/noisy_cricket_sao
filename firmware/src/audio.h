@@ -15,7 +15,6 @@ bool audio_busy(void);
 
 // 0..255, see DEFAULT_VOLUME
 void audio_set_volume(uint8_t volume);
-uint8_t audio_volume(void);
 
 // Progress through the current chirp, 0..255 (255 when idle)
 uint8_t audio_progress(void);
