@@ -1,0 +1,236 @@
+(footprint "LMD3526B261-OA5"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Omnidirectional -26dB 61dB SMD-5P,3.5x2.7mm Microphone RoHS")
+	(property "Reference" "REF**"
+		(at 0.5 -2.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "ad2fae91-e5e6-4b2f-8159-04871e0f7028")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "LMD3526B261-OA5"
+		(at 0.5 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "9234e1eb-a676-484f-b6ff-47541bc8d048")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://www.lcsc.com/datasheet/C47148414.pdf"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "31759ff3-a68b-45d4-8b9b-925bffdaa82c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Omnidirectional -26dB 61dB SMD-5P,3.5x2.7mm Microphone RoHS"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b4714351-a0f8-4901-95a3-0d37281d3e18")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_circle
+		(center -0.005 0.71)
+		(end -0.005 1.35)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Mask")
+		(uuid "45b3b07c-8df4-4c79-8a75-8c4d526451e7")
+	)
+	(fp_rect
+		(start -1.325 -1.75)
+		(end 1.325 1.75)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "6636279d-f782-4ece-8aca-0aa9904f9e93")
+	)
+	(fp_arc
+		(start -0.684612 0.415388)
+		(mid -0.525 0.175)
+		(end -0.284612 0.015388)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "84ddb834-21ff-4a86-b3e6-12978199aecb")
+	)
+	(fp_arc
+		(start -0.284612 1.4)
+		(mid -0.525 1.240388)
+		(end -0.684612 1)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "70ce1473-d93d-4ad8-bb6f-afabd6c1de04")
+	)
+	(fp_arc
+		(start 0.275 0.025)
+		(mid 0.515388 0.184612)
+		(end 0.675 0.425)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "c7ccecdb-ceed-40fc-8c50-a3e58b3f52e2")
+	)
+	(fp_arc
+		(start 0.682912 0.997074)
+		(mid 0.525 1.234902)
+		(end 0.287172 1.392814)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Paste")
+		(uuid "d744269a-bd7b-440a-86ea-afea9a7a32d8")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0.5 4 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "83d2b01e-0489-4fe9-9b31-a2720792c46d")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -0.005 0.71)
+		(size 0.5 0.5)
+		(drill 0.5)
+		(layers "*.Cu" "*.Mask")
+		(solder_mask_margin 0.15)
+		(thermal_bridge_angle 90)
+		(uuid "4ed0880d-ee9e-468b-a922-e532d216c74f")
+	)
+	(pad "1" smd roundrect
+		(at -0.835 -1.36)
+		(size 0.73 0.52)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "40480eae-e3e9-4fae-9ae4-9d7407c91a44")
+	)
+	(pad "2" smd roundrect
+		(at -0.835 -0.54)
+		(size 0.73 0.52)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "eb701c5a-c23d-4a1e-9f16-b1754da41c48")
+	)
+	(pad "3" smd roundrect
+		(at 0.835 -0.54)
+		(size 0.73 0.52)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "0f237920-0c18-40c0-a810-8fabc32f9322")
+	)
+	(pad "4" smd roundrect
+		(at 0.835 -1.36)
+		(size 0.73 0.52)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "d28cc61f-d6cb-48b2-b93c-2eb8f2876872")
+	)
+	(pad "5" smd custom
+		(at 0 1.45)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Mask")
+		(thermal_bridge_angle 90)
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_circle
+				(center -0.005 -0.74)
+				(end 0.735 -0.74)
+				(width 0.3)
+				(fill no)
+			)
+		)
+		(uuid "b318c8c2-fa78-4c16-a5eb-f03a9e66c3f1")
+	)
+	(zone
+		(layer "F.Cu")
+		(uuid "f0e23ce0-4815-44ee-a048-029fd1fb2c44")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.25)
+		(keepout
+			(tracks allowed)
+			(vias allowed)
+			(pads allowed)
+			(copperpour not_allowed)
+			(footprints allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+			(island_removal_mode 0)
+		)
+		(polygon
+			(pts
+				(xy -0.7 0.4) (xy -0.3 0) (xy 0.25 0) (xy 0.65 0.4) (xy 0.65 1.003353) (xy 0.253353 1.4) (xy -0.3 1.4)
+				(xy -0.7 1)
+			)
+		)
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/noisy_cricket_sao.pretty/LMD3526B261-OA5.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

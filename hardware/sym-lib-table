@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "noisy_cricket_sao")(type "KiCad")(uri "${KIPRJMOD}/noisy_cricket_sao.kicad_sym")(options "")(descr ""))
+)
